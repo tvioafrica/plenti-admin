@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             "phone"            => $this->phone,
             "email"            => $this->email,
             'username'         => $this->username,
-            "balance"          => AppLibrary::flatAmountFormat(($this->balance == 0) ? $this->customer_balance : $this->balance ),
+            "balance"          => ($this->balance == 0) ? $this->customer_balance : $this->balance,
             "currency_balance" => AppLibrary::currencyAmountFormat(($this->balance == 0) ? $this->customer_balance : $this->balance),
             "image"            => $this->image,
             "role_id"          => $this->myRole,

@@ -18,7 +18,7 @@ class EarnBurnPointResource extends JsonResource
 
         return [
             "earn_amount"  => $this->earn_amount,
-            "customer_balance"  => $this->customer_balance,       
+            "balance"  => $this->customer_balance,
         ];
     }
 }
