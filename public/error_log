@@ -1,1 +1,0 @@
-[24-Feb-2024 07:45:41 UTC] PHP Deprecated:  date_default_timezone_set(): Passing null to parameter #1 ($timezoneId) of type string is deprecated in /home/plenti/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php on line 47
