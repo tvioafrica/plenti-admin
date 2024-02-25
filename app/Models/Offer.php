@@ -45,6 +45,6 @@ class Offer extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('cover')->crop('crop-center', 548, 140)->keepOriginalImageFormat()->sharpen(10);
+        $this->addMediaConversion('cover')->crop('crop-center', 328, 180)->keepOriginalImageFormat()->sharpen(10);
     }
 }
