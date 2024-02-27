@@ -74,19 +74,41 @@ class TransactionService
         TransactionRequest $transactionRequest
         )
     {
-        $transaction                    = new Transaction;
-        $transaction->transaction_no    = time();
-        $transaction->amount_spent      = $transactionRequest->amount_spent;
-        $transaction->type              = $transactionRequest->transaction_type;;
-        $transaction->ref               = $transactionRequest->ref;
-        $transaction->commission        = $transactionRequest->commission;
-        $transaction->customer_id       = $transactionRequest->customer_id;
-        $transaction->creds             = $transactionRequest->creds;
-        $transaction->merchant_id       = $transactionRequest->branch->id;
-        $transaction->store_id          = $transactionRequest->branch->id;
-        $transaction->receipt           = time();
-        $transaction->entry             = $this->transactionMessage( $transactionRequest);
-        $transaction->save();
+        switch($transactionRequest->transaction_type){
+            case "gift" : {
+                $transaction                    = new Transaction;
+                $transaction->transaction_no    = time();
+                $transaction->amount_spent      = $transactionRequest->amount_spent;
+                $transaction->type              = $transactionRequest->transaction_type;;
+                $transaction->ref               = $transactionRequest->ref;
+                $transaction->commission        = $transactionRequest->commission;
+                $transaction->customer_id       = $transactionRequest->customer_id;
+                $transaction->creds             = $transactionRequest->creds;
+                $transaction->merchant_id       = $transactionRequest->branch->id;
+                $transaction->store_id          = $transactionRequest->branch->id;
+                $transaction->receipt           = time();
+                $transaction->entry             = $transactionRequest->entry;
+                $transaction->save();
+                break;
+            }
+            default :{
+                $transaction                    = new Transaction;
+                $transaction->transaction_no    = time();
+                $transaction->amount_spent      = $transactionRequest->amount_spent;
+                $transaction->type              = $transactionRequest->transaction_type;;
+                $transaction->ref               = $transactionRequest->ref;
+                $transaction->commission        = $transactionRequest->commission;
+                $transaction->customer_id       = $transactionRequest->customer_id;
+                $transaction->creds             = $transactionRequest->creds;
+                $transaction->merchant_id       = $transactionRequest->branch->id;
+                $transaction->store_id          = $transactionRequest->branch->id;
+                $transaction->receipt           = time();
+                $transaction->entry             = $this->transactionMessage( $transactionRequest);
+                $transaction->save();
+                break;
+            }
+        }
+
         return true;
     }
 

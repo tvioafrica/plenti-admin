@@ -147,4 +147,29 @@ class LoginController extends Controller
             'message' => trans('all.message.logout_success')
         ], 200);
     }
+
+    public function findUserByMobile(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'phone'    => ['required', 'string', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return new JsonResponse([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $request->merge(['status' => Status::ACTIVE]);
+        $user = User::where('phone', $request['phone'])->first();
+        if (!isset($user->roles[0])) {
+            return new JsonResponse([
+                'errors' => ['validation' => trans('all.message.role_exist')]
+            ], 400);
+        }
+        return new JsonResponse([
+            'message'           => trans('all.message.login_success'),
+            'user'              => new UserResource($user),
+        ], 201);
+    }
+
 }

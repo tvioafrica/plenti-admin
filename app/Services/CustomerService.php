@@ -266,4 +266,34 @@ class CustomerService
         return $this->user;
     }
 
+    public function earnPromoReward($request, User $branch, int $customerId): User
+    {
+        $customer = User::where(['id' =>  $customerId])->first();
+        $this->user = $customer;
+        $this->transactionService =  new TransactionService();
+
+        DB::transaction(function () use ($customer, $request, $branch) {
+            $pointsReceived  = $this->pointEngine($branch, $request->amount_spent, $request->transaction_type);
+            switch($request->transaction_type){
+                case "gift" : {
+                    $this->user->total_transactions = $customer->total_transactions + 1;
+                    $transactionRequest =  new TransactionRequest;
+                    $transactionRequest->amount_spent       = 0;
+                    $transactionRequest->ref                = $request->ref;
+                    $transactionRequest->customer_id        = $customer->id;
+                    $transactionRequest->payment_method     = $request->payment_method;
+                    $transactionRequest->creds              = 0;
+                    $transactionRequest->commission         = 0;
+                    $transactionRequest->transaction_type   = $request->transaction_type;
+                    $transactionRequest->branch             = $branch;
+                    $this->transactionService->saveTransactionLog($transactionRequest);
+                    break;
+                }
+            }
+            $this->user->save();
+        });
+
+        return $this->user;
+    }
+
 }

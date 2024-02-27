@@ -131,7 +131,7 @@ class CustomerController extends AdminController
         }
     }
 
-    public function earnPoints(
+    public function earnBurnPoints(
         EarnPointsRequest $request,
         User $customer
     ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
@@ -141,5 +141,17 @@ class CustomerController extends AdminController
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }
     }
-   
+
+
+    public function earnPromoReward(
+        EarnPointsRequest $request,
+        User $customer
+    ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return new EarnBurnPointResource($this->customerService->EarnBurnPoints($request, $customer,  auth()->user()->id));
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' =>$exception->getMessage()], 422);
+        }
+    }
+
 }

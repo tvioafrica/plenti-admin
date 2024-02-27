@@ -116,6 +116,8 @@ Route::match(['get', 'post'], '/refresh-token', [RefreshTokenController::class, 
 Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name('auth.')->namespace('Auth')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/login-mobile', [LoginController::class, 'loginMobile']);
+    Route::post('/find-customer', [LoginController::class, 'findUserByMobile']);
+
 
 
     Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
@@ -352,7 +354,8 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
         Route::get('/show/{customer}', [CustomerController::class, 'show']);
         Route::match(['post', 'put', 'patch'], '/{customer}', [CustomerController::class, 'update']);
         Route::delete('/{customer}', [CustomerController::class, 'destroy']);
-        Route::post('/earn-points/{customer}',  [CustomerController::class, 'earnPoints']);
+        Route::post('/earn-points/{customer}',  [CustomerController::class, 'earnBurnPoints']);
+        Route::post('/earn-promo-reward/{branch}',  [CustomerController::class, 'earnPromoReward']);
         Route::get('/export', [CustomerController::class, 'export']);
         Route::post('/change-password/{customer}', [CustomerController::class, 'changePassword']);
         Route::post('/change-image/{customer}', [CustomerController::class, 'changeImage']);
