@@ -155,10 +155,12 @@ class LoginController extends Controller
         ], 200);
     }
 
+
     public function customerByMobile(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'phone'    => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:6'],
         ]);
 
         if ($validator->fails()) {
@@ -166,22 +168,50 @@ class LoginController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
+        $request->merge(['status' => Status::ACTIVE]);
+
+        $user = User::where('phone', $request['phone'])->first();
+
+        if($user == null){
 
         return new JsonResponse([
-            'message'           => 'Invalid user',
-        ], 422);
-       /*  $user = User::where('phone', $request['phone'])->first();
-        if( $user != null){
-            return new JsonResponse([
-                'message'           => trans('all.message.login_success'),
-                'user'              => new UserResource($user),
-            ], 201);
-        }else{
-            return new JsonResponse([
-                'message'           => 'Invalid user',
-            ], 422);
-        } */
+            'message' => trans('Invalid username and password')
+        ], 400);
+        }
 
+        if (!Auth::guard('web')->attempt(
+                ['email' => $user->email,'password' => $request['password'],'status' => $request['status']
+            ])) {
+            return new JsonResponse([
+                'errors' => ['validation' => trans('all.message.credentials_invalid')]
+            ], 400);
+        }
+
+        $branchId = Auth::user()->branch_id;
+        if (Auth::user()->branch_id == 0) {
+            $branchId = Settings::group('site')->get('site_default_branch');
+        }
+        $this->defaultAccessService->storeOrUpdate(['branch_id' => $branchId]);
+        $user        = $user;
+        $this->token = $user->createToken('auth_token')->plainTextToken;
+
+        if (!isset($user->roles[0])) {
+            return new JsonResponse([
+                'errors' => ['validation' => trans('all.message.role_exist')]
+            ], 400);
+        }
+
+        $permission        = PermissionResource::collection($this->permissionService->permission($user->roles[0]));
+        $defaultPermission = AppLibrary::defaultPermission($permission);
+
+        return new JsonResponse([
+            'message'           => trans('all.message.login_success'),
+            'token'             => $this->token,
+            'branch_id'         => (int)$user->branch_id,
+            'user'              => new UserResource($user),
+            'menu'              => MenuResource::collection(collect($this->menuService->menu($user->roles[0]))),
+            'permission'        => $permission,
+            'defaultPermission' => $defaultPermission,
+        ], 201);
     }
-
 }
