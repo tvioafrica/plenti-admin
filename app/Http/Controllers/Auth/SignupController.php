@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\Activity;
-use App\Enums\Ask;
-use App\Http\Requests\SignupPhoneRequest;
-use App\Libraries\AppLibrary;
-use Carbon\Carbon;
 use Exception;
+use App\Enums\Ask;
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use App\Enums\Activity;
 use Illuminate\Support\Str;
+use App\Libraries\AppLibrary;
+use App\Enums\Role as EnumRole;
+use Illuminate\Support\Facades\DB;
 use App\Services\OtpManagerService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\VerifyPhoneRequest;
-use App\Enums\Role as EnumRole;
 use Smartisan\Settings\Facades\Settings;
+use App\Http\Requests\SignupPhoneRequest;
+use App\Http\Requests\VerifyPhoneRequest;
+use App\Http\Requests\OfflineSignupRequest;
 
 class SignupController extends Controller
 {
@@ -96,5 +97,48 @@ class SignupController extends Controller
             return response(['status' => true, 'message' => trans('all.message.register_successfully')], 201);
         }
         return response(['status' => false, 'message' => trans('all.message.code_is_invalid')], 422);
+    }
+
+    public function registerOffline(OfflineSignupRequest $request
+    ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+
+            $user = User::whereOr(['phone' => $request->post('phone')])->whereOr(['email' => $request->post('email')])->first();
+            $name = AppLibrary::name($request->post('first_name'), $request->post('last_name'));
+            if ($user) {
+                $user->name         = $name;
+                $user->first_name   = $request->post('first_name');
+                $user->last_name    = $request->post('last_name');
+                $user->gender       = $request->post('gender');
+                $user->phone       = $request->post('phone');
+                $user->mobile       = $request->post('mobile');
+                $user->email       = $request->post('email');
+                $user->username     = Str::slug($name);
+                $user->gender     = $request->post('gender');
+                $user->branch_id    = $request->post('branch_id');
+                $user->password     = Hash::make($request->post('password'));
+                $user->is_guest     = Ask::NO;
+                $user->save();
+            } else {
+                $user = User::create([
+                    'name'              => $name,
+                    'first_name'        =>  $request->post('first_name'),
+                    'last_name'         => $request->post('last_name'),
+                    'gender'            => $request->post('gender'),
+                    'username'          => Str::slug($name),
+                    'email'             => $request->post('email'),
+                    'phone'             => $request->post('phone'),
+                    'mobile'            => $request->post('phone'),
+                    'country_code'      => $request->post('country_code'),
+                    'branch_id'         => $request->post('branch_id'),
+                    'email_verified_at' => Carbon::now()->getTimestamp(),
+                    'is_guest'          => Ask::NO,
+                    'password'          => Hash::make($request->post('password'))
+                ]);
+                $user->assignRole(EnumRole::CUSTOMER);
+            }
+            return response(['status' => true,
+            'message' => trans('all.message.register_successfully'),
+            'data' => $user
+            ], 201);
     }
 }

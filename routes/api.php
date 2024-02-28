@@ -130,6 +130,7 @@ Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name
         Route::post('/otp', [SignupController::class, 'otp']);
         Route::post('/verify', [SignupController::class, 'verify']);
         Route::post('/register', [SignupController::class, 'register']);
+        Route::post('/register-offline', [SignupController::class, 'registerOffline']);
     });
 
     Route::prefix('guest-signup')->name('guest-signup.')->group(function () {
