@@ -41,6 +41,8 @@ class User extends Authenticatable implements HasMedia
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'username',
