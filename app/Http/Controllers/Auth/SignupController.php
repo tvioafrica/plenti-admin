@@ -121,7 +121,7 @@ class SignupController extends Controller
             } else {
                 $user = User::create([
                     'name'              => $name,
-                    'first_name'        =>  $request->post('first_name'),
+                    'first_name'        => $request->post('first_name'),
                     'last_name'         => $request->post('last_name'),
                     'gender'            => $request->post('gender'),
                     'username'          => Str::slug($name),

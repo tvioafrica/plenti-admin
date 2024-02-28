@@ -104,6 +104,13 @@ class LoginController extends Controller
 
         $user = User::where('phone', $request['phone'])->first();
 
+        if($user == null){
+
+        return new JsonResponse([
+            'message' => trans('all.message.login_success')
+        ], 400);
+        }
+
         if (!Auth::guard('web')->attempt(
                 ['email' => $user->email,'password' => $request['password'],'status' => $request['status']
             ])) {
