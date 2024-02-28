@@ -116,7 +116,7 @@ Route::match(['get', 'post'], '/refresh-token', [RefreshTokenController::class, 
 Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name('auth.')->namespace('Auth')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/login-mobile', [LoginController::class, 'loginMobile']);
-    Route::post('/mobile-search', [LoginController::class, 'loginMobile']);
+    Route::post('/mobile-search', [LoginController::class, 'findUserByMobile']);
 
 
 
