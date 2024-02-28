@@ -114,7 +114,7 @@ class SignupController extends Controller
                 $user->email        = $request->post('email');
                 $user->username     = Str::slug($name);
                 $user->gender       = $request->post('gender');
-                $user->branch_id    = $request->post('branch_id');
+                $user->branch_id    = 0;
                 $user->password     = Hash::make($request->post('password'));
                 $user->is_guest     = Ask::NO;
                 $user->save();
@@ -129,7 +129,7 @@ class SignupController extends Controller
                     'phone'             => $request->post('phone'),
                     'mobile'            => $request->post('phone'),
                     'country_code'      => $request->post('country_code'),
-                    'branch_id'         => $request->post('branch_id'),
+                    'branch_id'         => 0,
                     'email_verified_at' => Carbon::now()->getTimestamp(),
                     'is_guest'          => Ask::NO,
                     'password'          => Hash::make($request->post('password'))
