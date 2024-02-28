@@ -167,10 +167,17 @@ class LoginController extends Controller
             ], 422);
         }
         $user = User::where('phone', $request['phone'])->first();
-        return new JsonResponse([
-            'message'           => trans('all.message.login_success'),
-            'user'              => new UserResource($user),
-        ], 201);
+        if( $user != null){
+            return new JsonResponse([
+                'message'           => trans('all.message.login_success'),
+                'user'              => new UserResource($user),
+            ], 201);
+        }else{
+            return new JsonResponse([
+                'message'           => trans('invalid user'),
+            ], 422);
+        }
+
     }
 
 }
