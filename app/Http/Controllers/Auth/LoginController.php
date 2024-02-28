@@ -107,7 +107,7 @@ class LoginController extends Controller
         if($user == null){
 
         return new JsonResponse([
-            'message' => trans('all.message.login_success')
+            'message' => trans('Invalid username and password')
         ], 400);
         }
 
