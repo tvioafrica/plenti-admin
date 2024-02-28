@@ -7,13 +7,14 @@ use App\Models\User;
 use App\Services\OrderService;
 use App\Exports\CustomerExport;
 use App\Services\CustomerService;
+use App\Http\Resources\UserResource;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Http\Requests\EarnPointsRequest;
 use App\Http\Resources\CustomerResource;
 use App\Http\Requests\ChangeImageRequest;
-use App\Http\Requests\EarnPointsRequest;
 use App\Http\Resources\EarnBurnPointResource;
 use App\Http\Requests\UserChangePasswordRequest;
 
@@ -145,10 +146,15 @@ class CustomerController extends AdminController
 
     public function earnPromoReward(
         EarnPointsRequest $request,
-        User $customer
+        User $branch
     ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         try {
-            return new EarnBurnPointResource($this->customerService->EarnBurnPoints($request, $customer,  auth()->user()->id));
+            return response([
+            'status' => true,
+            'message' =>"Promo Claimed successfully",
+            'data' => new UserResource($this->customerService->earnPromoReward($request, $branch))
+        ], 422);
+           // return new EarnBurnPointResource($this->customerService->earnPromoReward($request, $branch));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }

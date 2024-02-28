@@ -75,7 +75,7 @@ class TransactionService
         )
     {
         switch($transactionRequest->transaction_type){
-            case "gift" : {
+            case "promo" : {
                 $transaction                    = new Transaction;
                 $transaction->transaction_no    = time();
                 $transaction->amount_spent      = $transactionRequest->amount_spent;
@@ -84,8 +84,10 @@ class TransactionService
                 $transaction->commission        = $transactionRequest->commission;
                 $transaction->customer_id       = $transactionRequest->customer_id;
                 $transaction->creds             = $transactionRequest->creds;
+                $transaction->branch_id         = $transactionRequest->branch->id;
                 $transaction->merchant_id       = $transactionRequest->branch->id;
                 $transaction->store_id          = $transactionRequest->branch->id;
+                $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
                 $transaction->entry             = $transactionRequest->entry;
                 $transaction->save();
@@ -100,8 +102,10 @@ class TransactionService
                 $transaction->commission        = $transactionRequest->commission;
                 $transaction->customer_id       = $transactionRequest->customer_id;
                 $transaction->creds             = $transactionRequest->creds;
+                $transaction->branch_id         = $transactionRequest->branch->id;
                 $transaction->merchant_id       = $transactionRequest->branch->id;
                 $transaction->store_id          = $transactionRequest->branch->id;
+                $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
                 $transaction->entry             = $this->transactionMessage( $transactionRequest);
                 $transaction->save();

@@ -266,16 +266,16 @@ class CustomerService
         return $this->user;
     }
 
-    public function earnPromoReward($request, User $branch, int $customerId): User
+    public function earnPromoReward($request, User $branch): User
     {
-        $customer = User::where(['id' =>  $customerId])->first();
+
+        $customer = User::where(['id' =>  $request->customer_id])->first();
         $this->user = $customer;
         $this->transactionService =  new TransactionService();
 
         DB::transaction(function () use ($customer, $request, $branch) {
-            $pointsReceived  = $this->pointEngine($branch, $request->amount_spent, $request->transaction_type);
             switch($request->transaction_type){
-                case "gift" : {
+                case "promo" : {
                     $this->user->total_transactions = $customer->total_transactions + 1;
                     $transactionRequest =  new TransactionRequest;
                     $transactionRequest->amount_spent       = 0;
