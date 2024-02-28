@@ -102,18 +102,18 @@ class SignupController extends Controller
     public function registerOffline(OfflineSignupRequest $request
     ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
 
-            $user = User::whereOr(['phone' => $request->post('phone')])->whereOr(['email' => $request->post('email')])->first();
+            $user = User::where('phone',$request->post('phone'))->orWhere('email',$request->post('email'))->first();
             $name = AppLibrary::name($request->post('first_name'), $request->post('last_name'));
             if ($user) {
                 $user->name         = $name;
                 $user->first_name   = $request->post('first_name');
                 $user->last_name    = $request->post('last_name');
                 $user->gender       = $request->post('gender');
-                $user->phone       = $request->post('phone');
+                $user->phone        = $request->post('phone');
                 $user->mobile       = $request->post('mobile');
-                $user->email       = $request->post('email');
+                $user->email        = $request->post('email');
                 $user->username     = Str::slug($name);
-                $user->gender     = $request->post('gender');
+                $user->gender       = $request->post('gender');
                 $user->branch_id    = $request->post('branch_id');
                 $user->password     = Hash::make($request->post('password'));
                 $user->is_guest     = Ask::NO;
