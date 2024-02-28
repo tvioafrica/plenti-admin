@@ -155,7 +155,7 @@ class LoginController extends Controller
         ], 200);
     }
 
-    public function findUserByMobile(Request $request): JsonResponse
+    public function customerByMobile(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'phone'    => ['required', 'string', 'max:255'],
