@@ -166,8 +166,11 @@ class LoginController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
-        $user = User::where('phone', $request['phone'])->first();
-        var_dump($user );
+
+        return new JsonResponse([
+            'message'           => 'Invalid user',
+        ], 422);
+       /*  $user = User::where('phone', $request['phone'])->first();
         if( $user != null){
             return new JsonResponse([
                 'message'           => trans('all.message.login_success'),
@@ -177,7 +180,7 @@ class LoginController extends Controller
             return new JsonResponse([
                 'message'           => 'Invalid user',
             ], 422);
-        }
+        } */
 
     }
 
