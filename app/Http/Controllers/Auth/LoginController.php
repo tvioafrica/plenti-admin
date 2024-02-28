@@ -167,9 +167,7 @@ class LoginController extends Controller
             ], 422);
         }
 
-        return new JsonResponse([
-            'message'           => 'Invalid user',
-        ], 422);
+
        $user = User::where('phone', $request['phone'])->first();
         if( $user != null){
             return new JsonResponse([
