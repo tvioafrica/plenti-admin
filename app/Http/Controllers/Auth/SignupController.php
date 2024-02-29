@@ -117,6 +117,7 @@ class SignupController extends Controller
                 $user->branch_id    = 0;
                 $user->password     = Hash::make($request->post('password'));
                 $user->is_guest     = Ask::NO;
+                $user->assignRole(EnumRole::CUSTOMER);
                 $user->save();
             } else {
                 $user = User::create([
@@ -129,6 +130,7 @@ class SignupController extends Controller
                     'phone'             => $request->post('phone'),
                     'mobile'            => $request->post('phone'),
                     'country_code'      => $request->post('country_code'),
+                    'customer_balance'  => 0,
                     'branch_id'         => 0,
                     'email_verified_at' => Carbon::now()->getTimestamp(),
                     'is_guest'          => Ask::NO,
