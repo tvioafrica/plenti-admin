@@ -100,10 +100,10 @@
                                     {{ transaction.date }}
                                 </td>
                                 <td class="db-table-body-td">
-                                   Dominic Essien
+                                    {{ transaction.customer[0].name }}
                                 </td>
                                 <td class="db-table-body-td">
-                                    Buy more Ikeja
+                                    {{ transaction.stores[0].name }}
                                 </td>
                                 <td class="db-table-body-td">
                                     <span class="text-[#2AC769]" v-if="transaction.sign == '+'">
