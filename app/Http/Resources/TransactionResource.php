@@ -26,6 +26,8 @@ class TransactionResource extends JsonResource
             'commission'      => $this->commission,
             'creds'           => number_format($this->creds, 3, ".", ","),
             'transaction'     => $this->transaction,
+            'stores'          => $this->stores,
+            'customer'        => $this->customer,
             'type'            => $this->type,
             'sign'            => $this->sign,
             'date'            => AppLibrary::datetime($this->created_at)

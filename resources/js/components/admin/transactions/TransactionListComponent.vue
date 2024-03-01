@@ -85,8 +85,8 @@
                             <tr class="db-table-head-tr">
                                 <th class="db-table-head-th">{{ $t('label.transaction_id') }}</th>
                                 <th class="db-table-head-th">{{ $t('label.date') }}</th>
-                                <th class="db-table-head-th">{{ $t('label.payment_method') }}</th>
-                                <th class="db-table-head-th">{{ $t('label.order_serial_no') }}</th>
+                                <th class="db-table-head-th">Customer Name</th>
+                                <th class="db-table-head-th">Store Name</th>
                                 <th class="db-table-head-th">{{ $t('label.amount') }}</th>
                                 <th class="db-table-head-th">{{ $t('label.point_earned') }}</th>
                             </tr>
@@ -100,10 +100,10 @@
                                     {{ transaction.date }}
                                 </td>
                                 <td class="db-table-body-td">
-                                    {{ transaction.payment_method }}
+                                   Dominic Essien
                                 </td>
                                 <td class="db-table-body-td">
-                                    {{ transaction.order_serial_no }}
+                                    Buy more Ikeja
                                 </td>
                                 <td class="db-table-body-td">
                                     <span class="text-[#2AC769]" v-if="transaction.sign == '+'">

@@ -22,4 +22,16 @@ class Transaction extends Model
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
+
+
+    public function stores() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'id', 'branch_id');
+    }
+
+
+    public function customer() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'id', 'customer_id');
+    }
 }

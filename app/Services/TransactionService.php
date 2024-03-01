@@ -33,7 +33,7 @@ class TransactionService
 
 
 
-            return Transaction::where(function ($query) use ($requests) {
+            return Transaction::with('stores', 'customer','order')->where(function ($query) use ($requests) {
   /*               if (isset($requests['branch_id'])) {
                     $query->whereHas('order', function ($query) use ($requests) {
                         $query->where(['branch_id' => $requests['branch_id']]);
