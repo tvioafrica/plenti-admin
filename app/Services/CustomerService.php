@@ -206,14 +206,13 @@ class CustomerService
         }
     }
 
-    public function earnBurnPoints($request, User $branch): User
+    public function earnBurnPoints($request, User $branch, int $pointsReceived ): User
     {
         $customer = User::where(['id' =>  $request->customer_id])->first();
         $this->user = $customer;
         $this->transactionService =  new TransactionService();
 
-        DB::transaction(function () use ($customer, $request, $branch) {
-            $pointsReceived  = $this->pointEngine($branch, $request->amount_spent, $request->transaction_type);
+        DB::transaction(function () use ($customer, $request, $branch, $pointsReceived) {
             switch($request->transaction_type){
                 case "earn" : {
                     $this->user->earn_point         = $customer->earn_point + $pointsReceived;
