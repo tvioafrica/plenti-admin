@@ -17,9 +17,11 @@ use App\Http\Resources\CustomerResource;
 use App\Http\Requests\ChangeImageRequest;
 use App\Http\Resources\EarnBurnPointResource;
 use App\Http\Requests\UserChangePasswordRequest;
+use App\Traits\DefaultAccessModelTrait;
 
 class CustomerController extends AdminController
 {
+    use DefaultAccessModelTrait;
     private CustomerService $customerService;
     private OrderService $orderService;
 
