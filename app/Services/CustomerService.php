@@ -223,6 +223,7 @@ class CustomerService
 
                     $transactionRequest =  new TransactionRequest;
                     $transactionRequest->amount_spent       = $request->amount_spent;
+                    $transactionRequest->amount             = $request->amount_spent;
                     $transactionRequest->ref                = $request->ref;
                     $transactionRequest->customer_id        = $customer->id;
                     $transactionRequest->payment_method     = $request->payment_method;
@@ -245,6 +246,7 @@ class CustomerService
 
                         $transactionRequest =  new TransactionRequest;
                         $transactionRequest->amount_spent       = $request->amount_spent;
+                        $transactionRequest->amount             = $request->amount_spent;
                         $transactionRequest->ref                = $request->ref;
                         $transactionRequest->customer_id        = $customer->id;
                         $transactionRequest->payment_method     = $request->payment_method;

@@ -7,6 +7,7 @@ use App\Models\User;
 
 class TransactionRequest
 {
+    public int $amount;
     public int $amount_spent;
     public String $payment_method = "Loyalty";
     public String $ref = "POS";
