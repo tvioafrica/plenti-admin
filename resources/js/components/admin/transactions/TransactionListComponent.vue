@@ -108,7 +108,7 @@
                                     {{ transaction.customer[0].name }}
                                 </td>
                                 <td class="db-table-body-td">
-                                    {{ transaction.customer[0].mobile }}
+                                    {{ transaction.customer[0].phone }}
                                 </td>
                                 <td class="db-table-body-td">
                                     {{ transaction.stores[0].name }}
