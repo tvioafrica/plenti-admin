@@ -261,6 +261,7 @@ class CustomerService
                 }
             }
             $this->user->save();
+            $this->user->merge(['points_earned' => $pointsReceived]);
         });
 
         return $this->user;
