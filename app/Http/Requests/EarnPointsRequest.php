@@ -24,7 +24,7 @@ class EarnPointsRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_spent' => ['required','max:10000','numeric', 'min:100', 'max:9999999999999'],
+            'amount_spent' => ['required','numeric', 'min:100', 'max:9999999999999'],
             'transaction_type' => ['required','string'],
         ];
     }
