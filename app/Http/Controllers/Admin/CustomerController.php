@@ -142,7 +142,7 @@ class CustomerController extends AdminController
             $pointsReceived  = $this->pointEngine($branch, $request->amount_spent, $request->transaction_type);
             return response([
                 'status' => true,
-                'message' =>"Transaction successful your just " +$request->transaction_type + $pointsReceived ,
+                'message' =>"Transaction successful you just " .$request->transaction_type . " ". $pointsReceived. " Points" ,
                 'data' => new UserResource($this->customerService->earnBurnPoints($request, $branch,$pointsReceived ))
             ], 201);
         } catch (Exception $exception) {
