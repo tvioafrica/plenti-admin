@@ -140,7 +140,7 @@ class CustomerController extends AdminController
             return response([
                 'status' => true,
                 'message' =>"Promo Claimed successfully",
-                'data' => new UserResource($this->customerService->earnPromoReward($request, $branch))
+                'data' => new UserResource($this->customerService->earnBurnPoints($request, $branch))
             ], 201);
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);

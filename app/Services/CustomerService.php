@@ -206,9 +206,9 @@ class CustomerService
         }
     }
 
-    public function EarnBurnPoints($request, User $branch, int $customerId): User
+    public function earnBurnPoints($request, User $branch): User
     {
-        $customer = User::where(['id' =>  $customerId])->first();
+        $customer = User::where(['id' =>  $request->customer_id])->first();
         $this->user = $customer;
         $this->transactionService =  new TransactionService();
 
