@@ -79,6 +79,7 @@ class TransactionService
                 $transaction                    = new Transaction;
                 $transaction->transaction_no    = time();
                 $transaction->amount_spent      = $transactionRequest->amount_spent;
+                $transaction->amount            = $transactionRequest->amount_spent;
                 $transaction->type              = $transactionRequest->transaction_type;;
                 $transaction->ref               = $transactionRequest->ref;
                 $transaction->commission        = $transactionRequest->commission;
@@ -97,6 +98,7 @@ class TransactionService
                 $transaction                    = new Transaction;
                 $transaction->transaction_no    = time();
                 $transaction->amount_spent      = $transactionRequest->amount_spent;
+                $transaction->amount            = $transactionRequest->amount_spent;
                 $transaction->type              = $transactionRequest->transaction_type;;
                 $transaction->ref               = $transactionRequest->ref;
                 $transaction->commission        = $transactionRequest->commission;

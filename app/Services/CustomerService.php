@@ -262,7 +262,6 @@ class CustomerService
                 }
             }
             $this->user->save();
-            $this->user->points_earned = $pointsReceived;
         });
 
         return $this->user;
