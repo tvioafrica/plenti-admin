@@ -355,7 +355,7 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
         Route::get('/show/{customer}', [CustomerController::class, 'show']);
         Route::match(['post', 'put', 'patch'], '/{customer}', [CustomerController::class, 'update']);
         Route::delete('/{customer}', [CustomerController::class, 'destroy']);
-        Route::post('/earn-points/{customer}',  [CustomerController::class, 'earnBurnPoints']);
+        Route::post('/earn-points/{branch}',  [CustomerController::class, 'earnBurnPoints']);
         Route::post('/earn-promo-reward/{branch}',  [CustomerController::class, 'earnPromoReward']);
         Route::get('/export', [CustomerController::class, 'export']);
         Route::post('/change-password/{customer}', [CustomerController::class, 'changePassword']);

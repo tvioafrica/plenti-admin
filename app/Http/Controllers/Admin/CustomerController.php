@@ -134,10 +134,14 @@ class CustomerController extends AdminController
 
     public function earnBurnPoints(
         EarnPointsRequest $request,
-        User $customer
+        User $branch
     ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         try {
-            return new EarnBurnPointResource($this->customerService->EarnBurnPoints($request, $customer,  auth()->user()->id));
+            return response([
+                'status' => true,
+                'message' =>"Promo Claimed successfully",
+                'data' => new UserResource($this->customerService->earnPromoReward($request, $branch))
+            ], 201);
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }
@@ -154,7 +158,6 @@ class CustomerController extends AdminController
             'message' =>"Promo Claimed successfully",
             'data' => new UserResource($this->customerService->earnPromoReward($request, $branch))
         ], 201);
-           // return new EarnBurnPointResource($this->customerService->earnPromoReward($request, $branch));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }
