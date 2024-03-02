@@ -122,7 +122,7 @@
                                     </span>
                                 </td>
                                 <td class="db-table-body-td">
-                                    {{ transaction.creds }}
+                                    {{(transaction.type == 'burn') ? "-"+transaction.creds : transaction.creds }}
                                 </td>
 
                             </tr>
