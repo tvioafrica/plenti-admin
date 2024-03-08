@@ -71,6 +71,8 @@ import {frontendCoupon} from "./modules/frontend/frontendCoupon";
 import { countryCode } from './modules/countryCode';
 import {frontendOrder} from "./modules/frontend/frontendOrder";
 import {frontendSignup} from "./modules/frontend/frontendSignup";
+import {frontendSignupAdvertiser} from "./modules/frontend/frontendSignupAdvertiser";
+import {frontendSignupMerchant} from "./modules/frontend/frontendSignupMerchant";
 import {GuestSignup} from "./modules/frontend/GuestSignup";
 import {backendGlobalState} from "./modules/backendGlobalState";
 import { myOrderDetails } from './modules/myOrderDetails';
@@ -164,6 +166,8 @@ export default new createStore({
         countryCode,
         frontendOrder,
         frontendSignup,
+        frontendSignupAdvertiser,
+        frontendSignupMerchant,
         GuestSignup,
         backendGlobalState,
         myOrderDetails,

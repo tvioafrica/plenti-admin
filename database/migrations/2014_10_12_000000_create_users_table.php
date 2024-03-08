@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('device_token')->nullable();
             $table->string('web_token')->nullable();
+            $table->string('verify_code')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable()->default(0);
             $table->string('country_code')->nullable();
             $table->unsignedTinyInteger('is_guest')->default(Ask::NO);

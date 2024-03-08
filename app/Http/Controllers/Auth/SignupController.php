@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\DB;
 use App\Services\OtpManagerService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
+use App\Http\Requests\VerifyMerchantRequest;
+use App\Http\Requests\SignUpMerchantRequest;
+use App\Http\Requests\SignUpAdvertiserRequest;
+use App\Http\Requests\VerifyAdvertiserRequest;
 use Illuminate\Support\Facades\Hash;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\SignupPhoneRequest;
 use App\Http\Requests\VerifyPhoneRequest;
 use App\Http\Requests\OfflineSignupRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\verifyMerchantAccountMail;
 
 class SignupController extends Controller
 {
@@ -97,6 +103,114 @@ class SignupController extends Controller
             return response(['status' => true, 'message' => trans('all.message.register_successfully')], 201);
         }
         return response(['status' => false, 'message' => trans('all.message.code_is_invalid')], 422);
+    }
+
+    public function registerMerchant(SignUpMerchantRequest $request
+    ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+            try
+            {
+                $name = $request->post('first_name')." ".$request->post('last_name');
+                $user = User::create([
+                    'name'              => $name,
+                    'username'          => Str::slug($name),
+                    'email'             => $request->post('email'),
+                    'phone'             => $request->post('phone'),
+                    'country_code'      => $request->post('country'),
+                    'branch_id'         => 0,
+                    'is_guest'          => Ask::NO,
+                    'password'          => Hash::make($request->post('password'))
+                ]);
+                $user->assignRole(EnumRole::BRANCH_MANAGER);
+                $token = random_int(1000, 9999);
+                $securedToken = Hash::make($token);
+                $user->verify_code = $securedToken;
+                $user->save();
+                $details = [
+                    'title' => 'Verify Email Address',
+                    'token' => "http://localhost:8000/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                ];
+                Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
+            
+                return response(['status' => true, 'message' => trans('all.message.register_successfully_mer')], 201);
+            } catch (Exception $exception) {
+                return response(['status' => false, 'message' => $exception->getMessage()], 422);
+            }
+    }
+
+    public function verifyMerchant(VerifyMerchantRequest $request
+    ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        
+        try{
+            $user = User::where('email', $request->post('email') )->first();
+            if (!(Hash::check($request->post('code'), $user->verify_code))) {
+                return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
+            }
+
+            User::where('email', $request->post('email') )->update([
+                'email_verified_at' => Carbon::now(),
+                'verified' => true,
+                'verify_code' => null
+            ]);
+                
+            return response(['status' => true, 'message' => trans('all.message.register_successfully_ver')], 201);
+        
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function registerAdvertiser(SignUpAdvertiserRequest $request
+    ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+            try
+            {
+                $name = $request->post('first_name')." ".$request->post('last_name');
+                $user = User::create([
+                    'name'              => $name,
+                    'username'          => Str::slug($name),
+                    'email'             => $request->post('email'),
+                    'phone'             => $request->post('phone'),
+                    'country_code'      => $request->post('country'),
+                    'branch_id'         => 0,
+                    'is_guest'          => Ask::NO,
+                    'password'          => Hash::make($request->post('password'))
+                ]);
+                $user->assignRole(EnumRole::ADVERTISER);
+                $token = random_int(1000, 9999);
+                $securedToken = Hash::make($token);
+                $user->verify_code = $securedToken;
+                $user->save();
+                $details = [
+                    'title' => 'Verify Email Address',
+                    'token' => "http://localhost:8000/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                ];
+                Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
+            
+                return response(['status' => true, 'message' => trans('all.message.register_successfully_mer')], 201);
+            } catch (Exception $exception) {
+                return response(['status' => false, 'message' => $exception->getMessage()], 422);
+            }
+    }
+
+    public function verifyAdvertiser(VerifyAdvertiserRequest $request
+    ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        
+        try{
+            $user = User::where('email', $request->post('email') )->first();
+            if (!(Hash::check($request->post('code'), $user->verify_code))) {
+                return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
+            }
+
+            User::where('email', $request->post('email') )->update([
+                'email_verified_at' => Carbon::now(),
+                'verified' => true,
+                'verify_code' => null
+            ]);
+                
+            return response(['status' => true, 'message' => trans('all.message.register_successfully_ver')], 201);
+        
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
     }
 
     public function registerOffline(OfflineSignupRequest $request
