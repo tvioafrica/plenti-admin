@@ -9,7 +9,7 @@ export const frontendSignup = {
         phone: function (state) {
             return state.phone;
         },
-    },
+    }, 
     actions: {
         otp: function (context, payload) {
             return new Promise((resolve, reject) => {
