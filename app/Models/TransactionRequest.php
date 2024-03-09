@@ -16,7 +16,7 @@ class TransactionRequest
     public  User $branch;
     public int $customer_id;
     public int $creds;
-    public String $entry = "";
+    public Array $entry = [];
     public String $reason = "";
     public String $network ="";
     public string $transaction_type;
