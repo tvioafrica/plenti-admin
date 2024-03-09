@@ -15,6 +15,7 @@ import pushNotificationRoutes from "./modules/pushNotificationRoutes";
 import customerRoutes from "./modules/customerRoutes";
 import administratorRoutes from "./modules/administratorRoutes";
 import deliveryBoyRoutes from "./modules/deliveryBoyRoutes";
+import advertisersRoutes from "./modules/advertisersRoutes";
 import employeeRoutes from "./modules/employeeRoutes";
 import frontendRoutes from "./modules/frontendRoutes";
 import salesReportRoutes from "./modules/salesReportRoutes";
@@ -73,6 +74,7 @@ const routes = baseRoutes.concat(
     onlineOrderRoutes,
     customerRoutes,
     deliveryBoyRoutes,
+    advertisersRoutes,
     administratorRoutes,
     employeeRoutes,
     salesReportRoutes,

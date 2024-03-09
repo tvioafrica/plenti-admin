@@ -6,11 +6,14 @@
     </div> -->
 
     <div class="mb-8">
-        <h3 class="font-semibold text-[26px] leading-10 capitalize text-primary">{{ visitorMessage() }}</h3>
-        <h4 class="font-medium text-[22px] leading-[34px] capitalize">{{ authInfo.name }}</h4>
-
+        <h3 class="font-semibold text-[26px] leading-10 capitalize ">
+            <span class="text-primary">{{ visitorMessage() }}
+        </span>  <span class="text-[22px]"> {{ authInfo.name }}</span>
+    </h3>
+<!--         <h4 class="font-medium text-[22px] leading-[34px] capitalize"></h4>
+ -->
     </div>
-    <div class="admin" v-if="authInfo.role_id == 3">
+    <div class="admin" v-if="authInfo.role_id == 9">
         <AdvertisersComponent />
     </div>
 

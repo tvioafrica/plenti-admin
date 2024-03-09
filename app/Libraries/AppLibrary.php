@@ -89,6 +89,32 @@ class AppLibrary
         return $buildArray;
     }
 
+    public static function numericToAssociativeArrayBuilderV2($array, $parentsMenus): array
+    {
+        $i = 0;
+        $buildArray = [];
+        if (count($array)) {
+           foreach($parentsMenus as $parent){
+                $buildArray[$i] = $parent;
+                foreach ($array as $arr) {
+                    if ($arr['parent'] == $parent['id']) {
+                        $buildArray[$i]['children'][] = $arr;
+                    }
+                }
+                $i++;
+            }
+
+        }
+        if ($buildArray) {
+            foreach ($buildArray as $key => $build) {
+                if ($build['url'] == "#" && !isset($build['children'])) {
+                    unset($buildArray[$key]);
+                }
+            }
+        }
+        return $buildArray;
+    }
+
     public static function numericToAssociativeArrayBuilder($array): array
     {
         $i = 0;

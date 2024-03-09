@@ -18,6 +18,7 @@ class MenuService
     {
         try {
             $menus           = Menu::get()->toArray();
+            $parentsMenus    = Menu::where(['parent'=>'0'])->get()->toArray();
             $permissions     = Permission::get();
             $rolePermissions = Permission::join(
                 "role_has_permissions",
@@ -27,7 +28,7 @@ class MenuService
             )->where("role_has_permissions.role_id", $role->id)->get()->pluck('name', 'id');
             $permissions     = AppLibrary::permissionWithAccess($permissions, $rolePermissions);
             $permissions     = AppLibrary::pluck($permissions, 'obj', 'url');
-            return AppLibrary::numericToAssociativeArrayBuilder(AppLibrary::menu($menus, $permissions));
+            return AppLibrary::numericToAssociativeArrayBuilderV2(AppLibrary::menu($menus, $permissions),$parentsMenus);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             throw new Exception($exception->getMessage(), 422);

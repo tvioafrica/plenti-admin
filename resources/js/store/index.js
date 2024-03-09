@@ -25,6 +25,8 @@ import {otp} from "./modules/otp";
 import {administrator} from "./modules/administrator";
 import {deliveryBoy} from "./modules/deliveryBoy";
 import {deliveryBoyAddress} from "./modules/deliveryBoyAddress";
+import {advertisers} from "./modules/advertisers";
+import {advertisersAddress} from "./modules/advertisersAddress";
 import {defaultAccess} from "./modules/defaultAccess";
 import {administratorAddress} from "./modules/administratorAddress";
 import {customerAddress} from "./modules/customerAddress";
@@ -122,6 +124,8 @@ export default new createStore({
         administrator,
         deliveryBoy,
         deliveryBoyAddress,
+        advertisers,
+        advertisersAddress,
         defaultAccess,
         administratorAddress,
         socialMedia,

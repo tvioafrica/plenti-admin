@@ -14,7 +14,7 @@
                             <ExcelComponent :method="xls" />
                         </div>
                     </div>
-                    <DeliveryBoyCreateComponent :props="props" v-if="permissionChecker('delivery-boys_create')" />
+                    <AdvertisersCreateComponent :props="props" v-if="permissionChecker('delivery-boys_create')" />
                 </div>
             </div>
 
@@ -83,29 +83,29 @@
                             <th class="db-table-head-th">{{ $t("label.phone") }}</th>
                             <th class="db-table-head-th">{{ $t("label.status") }}</th>
                             <th class="db-table-head-th hidden-print"
-                                v-if="permissionChecker('delivery-boys_show') || permissionChecker('delivery-boys_edit') || permissionChecker('delivery-boys_delete')">
+                                v-if="permissionChecker('advertisers_show') || permissionChecker('delivery-boys_edit') || permissionChecker('delivery-boys_delete')">
                                 {{ $t("label.action") }}</th>
                         </tr>
                     </thead>
-                    <tbody class="db-table-body" v-if="deliveryBoys.length > 0">
-                        <tr class="db-table-body-tr" v-for="deliveryBoy in deliveryBoys" :key="deliveryBoy">
-                            <td class="db-table-body-td">{{ textShortener(deliveryBoy.name, 20) }}</td>
-                            <td class="db-table-body-td">{{ deliveryBoy.email }}</td>
-                            <td class="db-table-body-td">{{ deliveryBoy.country_code + '' + deliveryBoy.phone }}</td>
+                    <tbody class="db-table-body" v-if="advertisers.length > 0">
+                        <tr class="db-table-body-tr" v-for="advertiser in advertisers" :key="advertiser">
+                            <td class="db-table-body-td">{{ textShortener(advertiser.name, 20) }}</td>
+                            <td class="db-table-body-td">{{ advertiser.email }}</td>
+                            <td class="db-table-body-td">{{ advertiser.country_code + '' + advertiser.phone }}</td>
                             <td class="db-table-body-td">
-                                <span :class="statusClass(deliveryBoy.status)">
-                                    {{ enums.statusEnumArray[deliveryBoy.status] }}
+                                <span :class="statusClass(advertiser.status)">
+                                    {{ enums.statusEnumArray[advertiser.status] }}
                                 </span>
                             </td>
                             <td class="db-table-body-td hidden-print"
-                                v-if="permissionChecker('delivery-boys_show') || permissionChecker('delivery-boys_edit') || permissionChecker('delivery-boys_delete')">
+                                v-if="permissionChecker('advertisers_show') || permissionChecker('advertisers_edit') || permissionChecker('delivery-boys_delete')">
                                 <div class="flex justify-start items-center sm:items-start sm:justify-start gap-1.5">
-                                    <SmIconViewComponent :link="'admin.delivery-boys.show'" :id="deliveryBoy.id"
-                                        v-if="permissionChecker('delivery-boys_show')" />
-                                    <SmIconSidebarModalEditComponent @click="edit(deliveryBoy)"
-                                        v-if="permissionChecker('delivery-boys_edit')" />
-                                    <SmIconDeleteComponent @click="destroy(deliveryBoy.id)"
-                                        v-if="permissionChecker('delivery-boys_delete')" />
+                                    <SmIconViewComponent :link="'admin.advertisers.show'" :id="advertiser.id"
+                                        v-if="permissionChecker('advertisers_show')" />
+                                    <SmIconSidebarModalEditComponent @click="edit(advertiser)"
+                                        v-if="permissionChecker('advertisers_edit')" />
+                                    <SmIconDeleteComponent @click="destroy(advertiser.id)"
+                                        v-if="permissionChecker('advertisers_delete')" />
                                 </div>
                             </td>
                         </tr>
@@ -125,7 +125,7 @@
 </template>
 <script>
 import LoadingComponent from "../components/LoadingComponent";
-import DeliveryBoyCreateComponent from "./DeliveryBoyCreateComponent";
+import AdvertisersCreateComponent from "./AdvertisersCreateComponent";
 import alertService from "../../../services/alertService";
 import PaginationTextComponent from "../components/pagination/PaginationTextComponent";
 import PaginationBox from "../components/pagination/PaginationBox";
@@ -174,7 +174,7 @@ export default {
             printLoading: true,
             printObj: {
                 id: "print",
-                popTitle: this.$t('menu.delivery_boys')
+                popTitle: this.$t('menu.advertisers')
             },
             props: {
                 form: {
@@ -233,14 +233,14 @@ export default {
         authBranch: function () {
             return this.$store.getters.authBranchId;
         },
-        deliveryBoys: function () {
-            return this.$store.getters["deliveryBoy/lists"];
+        advertisers: function () {
+            return this.$store.getters["advertisers/lists"];
         },
         pagination: function () {
-            return this.$store.getters["deliveryBoy/pagination"];
+            return this.$store.getters["advertisers/pagination"];
         },
         paginationPage: function () {
-            return this.$store.getters["deliveryBoy/page"];
+            return this.$store.getters["advertisers/page"];
         },
         countryCode: function () {
             return this.$store.getters['countryCode/show'];
@@ -275,28 +275,28 @@ export default {
         list: function (page = 1) {
             this.loading.isActive = true;
             this.props.search.page = page;
-            this.$store.dispatch("deliveryBoy/lists", this.props.search).then((res) => {
+            this.$store.dispatch("advertisers/lists", this.props.search).then((res) => {
                 this.loading.isActive = false;
             }).catch((err) => {
                 this.loading.isActive = false;
             });
         },
-        edit: function (deliveryBoy) {
+        edit: function (advertiser) {
             appService.sideDrawerShow();
             this.loading.isActive = true;
-            this.$store.dispatch("deliveryBoy/edit", deliveryBoy.id).then((res) => {
+            this.$store.dispatch("advertisers/edit", advertiser.id).then((res) => {
                 this.loading.isActive = false;
                 this.props.errors = {};
                 this.props.form = {
-                    name: deliveryBoy.name,
-                    email: deliveryBoy.email,
-                    phone: deliveryBoy.phone,
-                    password: deliveryBoy.password,
+                    name: advertiser.name,
+                    email: advertiser.email,
+                    phone: advertiser.phone,
+                    password: advertiser.password,
                     branch_id:
-                        deliveryBoy.branch_id === 0
+                    advertiser.branch_id === 0
                             ? 0
-                            : deliveryBoy.branch_id,
-                    status: deliveryBoy.status,
+                            : advertiser.branch_id,
+                    status: advertiser.status,
                     country_code: this.country_code,
                 };
             }).catch((err) => {
@@ -307,7 +307,7 @@ export default {
             appService.destroyConfirmation().then((res) => {
                 try {
                     this.loading.isActive = true;
-                    this.$store.dispatch("deliveryBoy/destroy", {
+                    this.$store.dispatch("advertisers/destroy", {
                         id: id,
                         search: this.props.search,
                     }).then((res) => {
@@ -330,12 +330,12 @@ export default {
         },
         xls: function () {
             this.loading.isActive = true;
-            this.$store.dispatch('deliveryBoy/export', this.props.search).then(res => {
+            this.$store.dispatch('advertisers/export', this.props.search).then(res => {
                 this.loading.isActive = false;
                 const blob = new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = this.$t("menu.delivery_boys");
+                link.download = this.$t("menu.advertisers");
                 link.click();
                 URL.revokeObjectURL(link.href);
             }).catch((err) => {

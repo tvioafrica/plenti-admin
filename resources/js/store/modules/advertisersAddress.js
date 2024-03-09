@@ -2,7 +2,7 @@ import axios from 'axios'
 import appService from "../../services/appService";
 
 
-export const deliveryBoyAddress = {
+export const advertisersAddress = {
     namespaced: true,
     state: {
         lists: [],

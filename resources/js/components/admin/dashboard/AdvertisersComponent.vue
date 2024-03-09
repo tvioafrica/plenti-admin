@@ -3,7 +3,7 @@
     <div class="col-12 xl:col-12">
         <div class="db-card">
             <div class="db-card-header">
-                <h3 class="db-card-title">{{ $t('label.customer_stats') }}</h3>
+                <h3 class="db-card-title"></h3>
                 <div id="customer-range" class="cursor-pointer flex items-center gap-3">
                     <Datepicker hideInputIcon autoApply :enableTimePicker="false" utc="false"
                         @update:modelValue="customerStates" v-model="date" range :preset-ranges="presetRanges">

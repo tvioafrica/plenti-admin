@@ -13,7 +13,7 @@
 import BreadcrumbComponent from "../components/BreadcrumbComponent";
 
 export default {
-    name: "DeliveryBoyComponent",
+    name: "AdvertisersComponent",
     components: {
         BreadcrumbComponent,
     },
