@@ -132,7 +132,11 @@ Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name
     Route::prefix('signup')->name('signup.')->group(function () {
         Route::post('/otp', [SignupController::class, 'otp']);
         Route::post('/verify', [SignupController::class, 'verify']);
+        Route::post('/verify-merchant', [SignupController::class, 'verifyMerchant']);
+        Route::post('/verify-advertiser', [SignupController::class, 'verifyAdvertiser']);
         Route::post('/register', [SignupController::class, 'register']);
+        Route::post('/register-merchant', [SignupController::class, 'registerMerchant']);
+        Route::post('/register-advertiser', [SignupController::class, 'registerAdvertiser']);
         Route::post('/register-offline', [SignupController::class, 'registerOffline']);
     });
 
