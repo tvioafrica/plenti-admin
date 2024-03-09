@@ -122,13 +122,13 @@ class SignupController extends Controller
                     'password'          => Hash::make($request->post('password'))
                 ]);
                 $user->assignRole(EnumRole::BRANCH_MANAGER);
-                $token = random_int(1000, 9999);
-                $securedToken = Hash::make($token);
+                $token = random_int(10000, 99999);
+                $securedToken = base64_encode($token);
                 $user->verify_code = $securedToken;
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$securedToken //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
             
@@ -142,12 +142,16 @@ class SignupController extends Controller
     ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         
         try{
-            $user = User::where('email', $request->post('email') )->first();
-            if (!(Hash::check($request->post('code'), $user->verify_code))) {
+            $user = User::where('verify_code', $request->post('code') )->first();
+            if (!$user){
                 return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
             }
 
-            User::where('email', $request->post('email') )->update([
+           /* if (!(Hash::check($request->post('code'), $user->verify_code))) {
+                return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
+            }*/
+
+            User::where( 'verify_code', $request->post('code') )->update([
                 'email_verified_at' => Carbon::now(),
                 'verified' => true,
                 'verify_code' => null
@@ -177,13 +181,13 @@ class SignupController extends Controller
                     'password'          => Hash::make($request->post('password'))
                 ]);
                 $user->assignRole(EnumRole::ADVERTISER);
-                $token = random_int(1000, 9999);
-                $securedToken = Hash::make($token);
+                $token = random_int(10000, 99999);
+                $securedToken = base64_encode($token);
                 $user->verify_code = $securedToken;
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$securedToken //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
             
@@ -197,12 +201,12 @@ class SignupController extends Controller
     ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         
         try{
-            $user = User::where('email', $request->post('email') )->first();
-            if (!(Hash::check($request->post('code'), $user->verify_code))) {
+            $user = User::where('verify_code', $request->post('code') )->first();
+            if (!$user){
                 return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
             }
 
-            User::where('email', $request->post('email') )->update([
+            User::where( 'verify_code', $request->post('code') )->update([
                 'email_verified_at' => Carbon::now(),
                 'verified' => true,
                 'verify_code' => null
