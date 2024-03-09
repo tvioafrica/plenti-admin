@@ -117,6 +117,7 @@ class SignupController extends Controller
                     'phone'             => $request->post('phone'),
                     'country_code'      => $request->post('country'),
                     'branch_id'         => 0,
+                    'email_verified_at' => null,
                     'is_guest'          => Ask::NO,
                     'password'          => Hash::make($request->post('password'))
                 ]);
@@ -170,6 +171,7 @@ class SignupController extends Controller
                     'email'             => $request->post('email'),
                     'phone'             => $request->post('phone'),
                     'country_code'      => $request->post('country'),
+                    'email_verified_at' => null,
                     'branch_id'         => 0,
                     'is_guest'          => Ask::NO,
                     'password'          => Hash::make($request->post('password'))
