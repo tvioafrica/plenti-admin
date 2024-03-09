@@ -805,19 +805,19 @@ body {
 .db-sidebar-nav-item.active .db-sidebar-nav-menu {
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-sidebar-nav-item.router-link-active .db-sidebar-nav-menu {
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-sidebar-nav-menu.router-link-active {
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-sidebar-nav-menu {
@@ -925,7 +925,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-message-list .active {
@@ -934,7 +934,7 @@ body {
 
 .db-message-list .active h4 {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 /*===================================
@@ -1086,7 +1086,7 @@ body {
     .paper-link:hover span {
   stroke: #FF006B;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .address-btn:hover svg,
@@ -2001,7 +2001,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-btn-outline {
@@ -2038,7 +2038,7 @@ body {
   border-color: rgb(255 0 107 / 0.2);
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-btn-outline i {
@@ -2050,7 +2050,7 @@ body {
   --tw-border-opacity: 1;
   border-color: rgb(255 0 107 / var(--tw-border-opacity));
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-btn-outline.primary:hover {
@@ -2152,7 +2152,7 @@ body {
 .db-btn-fill.primary {
   background-color: rgb(255 0 107 / 0.1);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-btn-fill.primary:hover {
@@ -2339,7 +2339,7 @@ body {
   font-size: 11px;
   font-weight: 700;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
   --tw-content: '\f107';
   content: var(--tw-content);
 }
@@ -2348,7 +2348,7 @@ body {
   border-color: rgb(255 0 107 / 0.1);
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-card-filter-select {
@@ -2370,7 +2370,7 @@ body {
   text-transform: capitalize;
   line-height: 1;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
@@ -2393,18 +2393,18 @@ body {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-card-filter-btn span {
   padding-right: 0.25rem;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-card-filter .db-field-down-arrow {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-card-filter-dropdown-list {
@@ -2449,7 +2449,7 @@ body {
 .db-card-filter-dropdown-menu:hover {
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-card-filter-dropdown-menu i {
@@ -2521,7 +2521,7 @@ body {
 
 .db-breadcrumb-link:hover {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 /* TABS */
@@ -2568,7 +2568,7 @@ body {
 .db-tab-btn.active {
   background-color: rgb(255 0 107 / 0.05) !important;
   --tw-text-opacity: 1 !important;
-  color: rgb(255 0 107 / var(--tw-text-opacity)) !important;
+  color: rgb(237 28 36) !important;
 }
 
 .db-tab-div {
@@ -2623,7 +2623,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 @media (min-width: 640px) {
@@ -2642,7 +2642,7 @@ body {
   border-color: rgb(255 0 107 / 0.5);
   background-color: rgb(255 0 107 / 0.05);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 @media (min-width: 640px) {
@@ -2843,7 +2843,7 @@ body {
   font-size: 1rem;
   line-height: 1.5rem;
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
@@ -3091,7 +3091,7 @@ input:checked + div svg {
 
 .custom-switch input:checked + label {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .custom-checkbox {
@@ -3290,7 +3290,7 @@ input:checked + div svg {
 .db-table-action.view i {
   background-color: rgb(255 0 107 / 0.1);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-table-action.view i:hover {
@@ -3619,7 +3619,7 @@ input:checked + div svg {
 .db-pagination-menu.active {
   background-color: rgb(255 0 107 / 0.2);
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .db-pagination-menu i {
@@ -3960,7 +3960,7 @@ input:checked + div svg {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .installer-track li.active i {
@@ -5182,7 +5182,7 @@ input:checked + div svg {
 
 .border-\[\#ff3388\] {
   --tw-border-opacity: 1;
-  border-color: rgb(255 51 136 / var(--tw-border-opacity));
+  border-color: rgb(237 28 36);
 }
 
 .border-\[\#D9DBE9\] {
@@ -6121,7 +6121,7 @@ input:checked + div svg {
 
 .text-primary {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .text-\[\#1AB759\] {
@@ -6854,7 +6854,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .hover\:text-primary:hover {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .hover\:text-red-500:hover {
@@ -6900,7 +6900,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .group:hover .group-hover\:text-primary {
   --tw-text-opacity: 1;
-  color: rgb(255 0 107 / var(--tw-text-opacity));
+  color: rgb(237 28 36);
 }
 
 .group:hover .group-hover\:opacity-100 {
