@@ -51,6 +51,7 @@ class User extends Authenticatable implements HasMedia
         'branch_id',
         'customer_balance',
         'country_code',
+        'verify_code',
         'is_guest',
         'status',
         'email_verified_at'

@@ -9,7 +9,8 @@ interface Role
     const DELIVERY_BOY   = 3;
     const WAITER         = 4;
     const CHEF           = 5;
-    const BRANCH_MANAGER = 6;
+    const BRANCH_MANAGER = 6;// Changed to Merchant
     const POS_OPERATOR   = 7;
     const STUFF          = 8;
+    const ADVERTISER     = 9;
 }

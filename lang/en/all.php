@@ -72,6 +72,8 @@ return [
         'phone_exist'                 => 'This phone already exist.',
         'otp_verify_success'          => 'The OTP verify is successfully.',
         'register_successfully'       => 'Register Successfully.',
+        'register_successfully_mer'   => 'Merchant/Advertiser registered but verify e-mail before we continue.',
+        'register_successfully_ver'   => 'Merchant/Advertiser email verified.',
         'select_your_payment_method'  => 'Select your payment method',
         'payment_successful'          => 'Your payment has been successfully processed',
         'payment_canceled'            => 'The payment is canceled',
