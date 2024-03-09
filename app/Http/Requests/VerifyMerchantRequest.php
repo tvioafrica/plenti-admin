@@ -28,7 +28,6 @@ class VerifyMerchantRequest extends FormRequest
     {
         return [
             'code'  => ['required', 'string'],
-            'email'  => ['required', 'string', 'email' ],
         ];
     }
 }

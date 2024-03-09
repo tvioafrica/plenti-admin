@@ -28,7 +28,6 @@ class VerifyAdvertiserRequest extends FormRequest
     {
         return [
             'code'  => ['required', 'string'],
-            'email'  => ['required', 'string', 'email' ],
         ];
     }
 }
