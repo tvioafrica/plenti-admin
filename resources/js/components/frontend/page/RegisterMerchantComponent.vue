@@ -5,7 +5,7 @@
         <div class="row mb-7">
             <div class="col-12 sm:col-12 mb-2"> 
                 <div class="flex items-center gap-2 mb-3">
-                    <h3 class="font-semibold leading-4 text-[10px]"> Your account has now been verified! You can now login! </h3>
+                    <h3 class="font-semibold leading-4 text-[16px]"> Your account has now been verified! You can now login! </h3>
                 </div>    
             </div>
         </div>
@@ -154,7 +154,7 @@ export default {
                     this.loading.isActive = true;
                     this.$store.dispatch("frontendSignupMerchant/signup", this.props.form).then((res) => {
                         this.errors = {};
-                        alertService.success(res.data.message, 'bottom-center');
+                        alertService.success(res.data.message);
                         this.loading.isActive = false;
                         this.props.form = {
                             first_name: "",
@@ -174,7 +174,7 @@ export default {
                     this.loading.isActive = true;
                     this.$store.dispatch("frontendSignupAdvertiser/signup", this.props.form).then((res) => {
                         this.errors = {};
-                        alertService.success(res.data.message, 'bottom-center');
+                        alertService.success(res.data.message);
                         this.loading.isActive = false;
                         this.props.form = {
                             first_name: "",
