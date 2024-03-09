@@ -563,6 +563,11 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
         Route::get('/top-customers', [DashboardController::class, 'topCustomers']);
         Route::get('/featured-items', [DashboardController::class, 'featuredItems']);
         Route::get('/popular-items', [DashboardController::class, 'mostPopularItems']);
+        Route::get('/trends', [DashboardController::class, 'trends']);
+        Route::get('/get-advertisers-stats', [DashboardController::class, 'getAdvertisersStats']);
+        Route::get('/get-transaction-by-gender', [DashboardController::class, 'getTransactionByGender']);
+        Route::get('/get-product-category-achievements', [DashboardController::class, 'getProductCategory']);
+
     });
 
     Route::prefix('sales-report')->name('sales-report.')->group(function () {

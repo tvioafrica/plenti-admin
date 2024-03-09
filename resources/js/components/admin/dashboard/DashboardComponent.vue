@@ -1,45 +1,52 @@
 <template>
-    <LoadingComponent :props="loading"/>
-    <div v-if="demo === 'true' || demo === 'TRUE' || demo === 'True' || demo === '1' || demo === 1" class="mb-4 bg-red-100 p-2 pl-4  rounded">
+    <LoadingComponent :props="loading" />
+    <!--  <div v-if="demo === 'true' || demo === 'TRUE' || demo === 'True' || demo === '1' || demo === 1" class="mb-4 bg-red-100 p-2 pl-4  rounded">
         <h2 class="mb-1">{{ $t('label.reminder') }}</h2>
         <p>{{ $t('label.data_reset') }}</p>
-    </div>
+    </div> -->
 
     <div class="mb-8">
         <h3 class="font-semibold text-[26px] leading-10 capitalize text-primary">{{ visitorMessage() }}</h3>
         <h4 class="font-medium text-[22px] leading-[34px] capitalize">{{ authInfo.name }}</h4>
+
     </div>
-    <!--========OVERVIEW START=============-->
-    <OverviewComponent/>
-    <!--========OVERVIEW END=============-->
+    <div class="admin" v-if="authInfo.role_id == 3">
+        <AdvertisersComponent />
+    </div>
 
-    <!--========ORDER STATISTIC START=============-->
-    <OrderStatisticsComponent/>
-    <!--========ORDER STATISTIC END=============-->
-    <div class="row">
-        <!--========SALES SUMMARY START=============-->
-        <SalesSummaryComponent/>
-        <!--========SALES SUMMARY END=============-->
+    <div class="admin" v-if="authInfo.role_id == 1">
+        <!--========OVERVIEW START=============-->
+        <OverviewComponent />
+        <!--========OVERVIEW END=============-->
 
-        <!--========ORDERS SUMMARY START=============-->
-        <OrderSummaryComponent/>
-        <!--========ORDERS SUMMARY END=============-->
+        <!--========ORDER STATISTIC START=============-->
+        <OrderStatisticsComponent />
+        <!--========ORDER STATISTIC END=============-->
+        <div class="row">
+            <!--========SALES SUMMARY START=============-->
+            <SalesSummaryComponent />
+            <!--========SALES SUMMARY END=============-->
 
-        <!--========CUSTOMER STATS START=============-->
-        <CustomerStatsComponent/>
-        <!--========CUSTOMER STATS END=============-->
+            <!--========ORDERS SUMMARY START=============-->
+            <OrderSummaryComponent />
+            <!--========ORDERS SUMMARY END=============-->
 
-        <!--========TOP CUSTOMERS START=============-->
-        <TopCustomersComponent/>
-        <!--========TOP CUSTOMERS END=============-->
+            <!--========CUSTOMER STATS START=============-->
+            <CustomerStatsComponent />
+            <!--========CUSTOMER STATS END=============-->
 
-        <!--========FEATURED ITEMS START=============-->
-        <FeaturedItemsComponent/>
-        <!--========FEATURED ITEMS END=============-->
+            <!--========TOP CUSTOMERS START=============-->
+            <TopCustomersComponent />
+            <!--========TOP CUSTOMERS END=============-->
 
-        <!--========MOST POPULAR ITEMS START=============-->
-        <MostPopularItemsComponent/>
-        <!--========MOST POPULAR ITEMS END=============-->
+            <!--========FEATURED ITEMS START=============-->
+            <FeaturedItemsComponent />
+            <!--========FEATURED ITEMS END=============-->
+
+            <!--========MOST POPULAR ITEMS START=============-->
+            <MostPopularItemsComponent />
+            <!--========MOST POPULAR ITEMS END=============-->
+        </div>
     </div>
 </template>
 
@@ -53,8 +60,8 @@ import MostPopularItemsComponent from "./MostPopularItemsComponent";
 import SalesSummaryComponent from "./SalesSummaryComponent";
 import OrderSummaryComponent from "./OrderSummaryComponent";
 import CustomerStatsComponent from "./CustomerStatsComponent";
+import AdvertisersComponent from "./AdvertisersComponent";
 import ENV from "../../../config/env";
-
 export default {
     name: "DashboardComponent",
     components: {
@@ -66,18 +73,20 @@ export default {
         MostPopularItemsComponent,
         SalesSummaryComponent,
         OrderSummaryComponent,
-        CustomerStatsComponent
+        CustomerStatsComponent,
+        AdvertisersComponent
     },
     data() {
         return {
             loading: {
                 isActive: false,
             },
-            demo : ENV.DEMO
+            demo: ENV.DEMO
         };
     },
     computed: {
         authInfo: function () {
+            console.log(this.$store.getters.authInfo)
             return this.$store.getters.authInfo;
         }
     },
@@ -94,7 +103,7 @@ export default {
                 greet = this.$t('message.good_evening');
             }
             return greet;
-        }
+        },
     }
 }
 </script>

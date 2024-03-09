@@ -12,6 +12,10 @@ export const dashboard = {
         orderSummary: [],
         salesSummary: [],
         customerStates: [],
+        getAdvertisersStats: [],
+        getTransactionByGender: [],
+        getProductCategory: [],
+        trends: [],
         featuredItems: [],
         mostPopularItems: [],
         topCustomers: [],
@@ -50,6 +54,18 @@ export const dashboard = {
         },
         topCustomers: function (state) {
             return state.topCustomers;
+        },
+        getAdvertisersStats: function (state) {
+            return state.getAdvertisersStats;
+        },
+        getTransactionByGender: function (state) {
+            return state.getAdvertisersStats;
+        },
+        getProductCategory: function (state) {
+            return state.getAdvertisersStats;
+        },
+        trends: function (state) {
+            return state.getAdvertisersStats;
         },
     },
 
@@ -205,6 +221,66 @@ export const dashboard = {
                     });
             });
         },
+        getAdvertisersStats: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-advertisers-stats";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getAdvertisersStats", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        getTransactionByGender: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-transaction-by-gender";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getTransactionByGender", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        getProductCategory: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-product-category-achievements";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getProductCategory", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        trends: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/trends";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("trends", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
     },
 
     mutations: {
@@ -240,6 +316,18 @@ export const dashboard = {
         },
         topCustomers: function (state, payload) {
             state.topCustomers = payload;
+        },
+        getAdvertisersStats: function (state, payload) {
+            state.getAdvertisersStats = payload;
+        },
+        getTransactionByGender: function (state, payload) {
+            state.getTransactionByGender = payload;
+        },
+        getProductCategory: function (state, payload) {
+            state.getProductCategory = payload;
+        },
+        trends: function (state, payload) {
+            state.trends = payload;
         },
     },
 };

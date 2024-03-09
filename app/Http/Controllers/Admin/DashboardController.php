@@ -141,4 +141,56 @@ class DashboardController extends AdminController
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
+
+    public function getAdvertisersStats(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getAdvertisersStats($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function getTransactionByGender(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getTransactionByGender($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function getProductCategory(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getProductCategory($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function trends(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->trends($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
 }

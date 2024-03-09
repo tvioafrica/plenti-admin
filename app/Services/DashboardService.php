@@ -8,11 +8,14 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\Order;
 use App\Enums\OrderStatus;
+use App\Models\Transaction;
 use App\Enums\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Libraries\AppLibrary;
 use App\Enums\Role as EnumRole;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardService
 {
@@ -215,4 +218,103 @@ class DashboardService
             throw new Exception($exception->getMessage(), 422);
         }
     }
+
+    public function getAdvertisersStats(Request $request)
+    {
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+
+        return collect(
+        DB::select('call getDashboardStats(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )))->first();
+    }
+
+    public function getTransactionByGender(Request $request)
+    {
+        $series = [];
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $genderData =  collect(DB::select('call getTransactionsByGender(?,?,?)',
+         array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )))->first();
+
+        $series['total'] = $genderData->total;
+
+        $series['gender'][0]['name'] = "Male";
+        $series['gender'][0]['y'] = (int) $genderData->male;
+
+        $series['gender'][1]['name'] = "Female";
+        $series['gender'][1]['y'] = (int) $genderData->female;
+
+        $series['gender'][2]['name'] = "Undisclosed";
+        $series['gender'][2]['y'] = (int) $genderData->undisclosed;
+
+        return $series;
+    }
+
+    public function getProductCategory(Request $request)
+    {
+        $series = [];
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $topProducts =  DB::select('call getTopProducts(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )
+        );
+        foreach($topProducts as $key => $product){
+            $series[$key]['name'] = $product->item;
+            $series[$key]['y'] = $product->total_count;
+        }
+        return $series;
+    }
+
+    public function trends(Request $request)
+    {
+        $series = [];
+
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $dataSet =  DB::select('call getTransactionTrend(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        ));
+        foreach($dataSet as $key => $data){
+            $series[$key]['category'] = $data->transaction_day;
+            $series[$key]['series'] = $data->total_transactions;
+        }
+        return $series;
+    }
+
 }

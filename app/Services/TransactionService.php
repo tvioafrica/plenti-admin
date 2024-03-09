@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\TransactionRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionService
 {
@@ -34,12 +35,11 @@ class TransactionService
 
 
             return Transaction::with('stores', 'customer','order')->where(function ($query) use ($requests) {
-  /*               if (isset($requests['branch_id'])) {
-                    $query->whereHas('order', function ($query) use ($requests) {
-                        $query->where(['branch_id' => $requests['branch_id']]);
-                    });
-                }
 
+                if ( Auth::user()->myrole) {
+                        $query->where(['type' => "promo"]);
+                }
+  /*
                 if (isset($requests['order_serial_no'])) {
                     $query->whereHas('order', function ($query) use ($requests) {
                         $query->where(['order_serial_no' => $requests['order_serial_no']]);
