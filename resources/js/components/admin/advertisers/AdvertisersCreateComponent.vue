@@ -4,7 +4,7 @@
 
     <div id="sidebar" class="drawer">
         <div class="drawer-header">
-            <h3 class="drawer-title">{{ $t("menu.delivery_boys") }}</h3>
+            <h3 class="drawer-title">{{ $t("menu.advertisers") }}</h3>
             <button class="fa-solid fa-xmark close-btn" @click="reset"></button>
         </div>
         <div class="drawer-body">

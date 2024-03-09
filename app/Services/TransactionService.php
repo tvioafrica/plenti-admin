@@ -74,9 +74,14 @@ class TransactionService
         TransactionRequest $transactionRequest
         )
     {
+        $itemData = array(
+            "items"=>$transactionRequest->entry,
+            "total"=> 3
+        );
         switch($transactionRequest->transaction_type){
             case "promo" : {
                 $transaction                    = new Transaction;
+
                 $transaction->transaction_no    = time();
                 $transaction->amount_spent      = $transactionRequest->amount_spent;
                 $transaction->amount            = $transactionRequest->amount_spent;
@@ -90,7 +95,8 @@ class TransactionService
                 $transaction->store_id          = $transactionRequest->branch->id;
                 $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
-                $transaction->entry             = $transactionRequest->entry;
+                $transaction->entry             = json_encode($transactionRequest->entry);
+                $transaction->entry_json        = json_encode($itemData);
                 $transaction->save();
                 break;
             }
@@ -109,7 +115,7 @@ class TransactionService
                 $transaction->store_id          = $transactionRequest->branch->id;
                 $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
-                $transaction->entry             = $this->transactionMessage( $transactionRequest);
+                $transaction->entry             = $this->transactionMessage($transactionRequest);
                 $transaction->save();
                 break;
             }
