@@ -1,14 +1,11 @@
 <?php
 
 
-use App\Http\Controllers\Admin\PosController;
-use App\Http\Controllers\Admin\PosOrderController;
-use App\Http\Controllers\Auth\DeactivateController;
-use App\Http\Controllers\Auth\SignupController;
-use App\Http\Controllers\Frontend\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OtpController;
+use App\Http\Controllers\Admin\PosController;
 use App\Http\Controllers\Admin\TaxController;
+use App\Http\Controllers\Admin\BillController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\PageController;
@@ -16,84 +13,90 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OfferController;
-use App\Http\Controllers\Admin\OnlineOrderController;
 use App\Http\Controllers\Admin\ThemeController;
+use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\CookiesController;
+use App\Http\Controllers\Admin\LicenseController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\AnalyticController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\PosOrderController;
 use App\Http\Controllers\Admin\TimeSlotController;
+use App\Http\Controllers\Admin\TimezoneController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ItemAddonController;
 use App\Http\Controllers\Admin\ItemExtraController;
+use App\Http\Controllers\Admin\OfferItemController;
+use App\Http\Controllers\Auth\DeactivateController;
+use App\Http\Controllers\Admin\OrderSetupController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\SimpleUserController;
 use App\Http\Controllers\Admin\SmsGatewayController;
 use App\Http\Controllers\Admin\SubscriberController;
+use App\Http\Controllers\Auth\GuestSignupController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\SettingController;
+use App\Http\Controllers\Admin\AdvertisersController;
+use App\Http\Controllers\Admin\CountryCodeController;
 use App\Http\Controllers\Admin\DeliveryBoyController;
-use App\Http\Controllers\Admin\LicenseController;
+use App\Http\Controllers\Admin\DiningTableController;
+use App\Http\Controllers\Admin\ItemsReportController;
 use App\Http\Controllers\Admin\MenuSectionController;
+use App\Http\Controllers\Admin\OnlineOrderController;
+use App\Http\Controllers\Admin\PosCategoryController;
+use App\Http\Controllers\Admin\SalesReportController;
 use App\Http\Controllers\Admin\SocialMediaController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Auth\RefreshTokenController;
 use App\Http\Controllers\Admin\ItemCategoryController;
 use App\Http\Controllers\Admin\MenuTemplateController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\DefaultAccessController;
-use App\Http\Controllers\Admin\BillController;
 use App\Http\Controllers\Admin\ItemAttributeController;
 use App\Http\Controllers\Admin\ItemVariationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Frontend\TokenStoreController;
+use App\Http\Controllers\Admin\MyOrderDetailsController;
 use App\Http\Controllers\Admin\PaymentGatewayController;
 use App\Http\Controllers\Admin\AnalyticSectionController;
-use App\Http\Controllers\Admin\DiningTableController;
 use App\Http\Controllers\Admin\CustomerAddressController;
 use App\Http\Controllers\Admin\EmployeeAddressController;
-use App\Http\Controllers\Admin\EmployeeController;
-use App\Http\Controllers\Admin\PushNotificationController;
-use App\Http\Controllers\Admin\DeliveryBoyAddressController;
-use App\Http\Controllers\Admin\AdministratorAddressController;
-use App\Http\Controllers\Admin\CountryCodeController;
-use App\Http\Controllers\Admin\CreditBalanceReportController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdvertisersOrderController;
 use App\Http\Controllers\Admin\DeliveryBoyOrderController;
-use App\Http\Controllers\Admin\ItemAddonController;
-use App\Http\Controllers\Admin\ItemsReportController;
-use App\Http\Controllers\Admin\MyOrderDetailsController;
+use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\NotificationAlertController;
-use App\Http\Controllers\Admin\OfferItemController;
-use App\Http\Controllers\Admin\OrderSetupController;
-use App\Http\Controllers\Admin\PosCategoryController;
-use App\Http\Controllers\Admin\SalesReportController;
-use App\Http\Controllers\Admin\SimpleUserController;
-use App\Http\Controllers\Admin\TimezoneController;
-use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Auth\GuestSignupController;
-use App\Http\Controllers\Auth\RefreshTokenController;
-use App\Http\Controllers\Frontend\TokenStoreController;
+use App\Http\Controllers\Admin\AdvertisersAddressController;
+use App\Http\Controllers\Admin\DeliveryBoyAddressController;
+use App\Http\Controllers\Admin\CreditBalanceReportController;
+use App\Http\Controllers\Admin\AdministratorAddressController;
+use App\Http\Controllers\Table\OrderController as TableOrderController;
 use App\Http\Controllers\Frontend\ItemController as FrontendItemController;
+use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\Frontend\OfferController as FrontendOfferController;
+use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
 use App\Http\Controllers\Frontend\BranchController as FrontendBranchController;
+use App\Http\Controllers\Frontend\CouponController as FrontendCouponController;
+use App\Http\Controllers\Frontend\SliderController as FrontendSliderController;
+use App\Http\Controllers\Admin\TableOrderController as AdminTableOrderController;
 use App\Http\Controllers\Frontend\AddressController as FrontendAddressController;
-use App\Http\Controllers\Frontend\CountryCodeController as FrontendCountryCodeController;
+use App\Http\Controllers\Frontend\CookiesController as FrontendCookiesController;
 use App\Http\Controllers\Frontend\MessageController as FrontendMessageController;
 use App\Http\Controllers\Frontend\LanguageController as FrontendLanguageController;
-use App\Http\Controllers\Frontend\SubscriberController as FrontendSubscriberController;
-use App\Http\Controllers\Frontend\ItemCategoryController as FrontendItemCategoryController;
 use App\Http\Controllers\Frontend\TimeSlotController as FrontendTimeSlotController;
-use App\Http\Controllers\Frontend\CouponController as FrontendCouponController;
-use App\Http\Controllers\Frontend\PageController as FrontendPageController;
-use App\Http\Controllers\Frontend\SliderController as FrontendSliderController;
-use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
-use App\Http\Controllers\Frontend\CookiesController as FrontendCookiesController;
-use App\Http\Controllers\Frontend\DeliveryBoyOrderController as FrontendDeliveryBoyOrderController;
-use App\Http\Controllers\Table\ItemCategoryController as TableItemCategoryController;
-use App\Http\Controllers\Table\OrderController as TableOrderController;
-use App\Http\Controllers\Admin\TableOrderController as AdminTableOrderController;
 use App\Http\Controllers\Table\DiningTableController as TableDiningTableController;
+use App\Http\Controllers\Table\ItemCategoryController as TableItemCategoryController;
+use App\Http\Controllers\Frontend\SubscriberController as FrontendSubscriberController;
+use App\Http\Controllers\Frontend\CountryCodeController as FrontendCountryCodeController;
+use App\Http\Controllers\Frontend\ItemCategoryController as FrontendItemCategoryController;
+use App\Http\Controllers\Frontend\DeliveryBoyOrderController as FrontendDeliveryBoyOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,11 +132,7 @@ Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name
     Route::prefix('signup')->name('signup.')->group(function () {
         Route::post('/otp', [SignupController::class, 'otp']);
         Route::post('/verify', [SignupController::class, 'verify']);
-        Route::post('/verify-merchant', [SignupController::class, 'verifyMerchant']);
-        Route::post('/verify-advertiser', [SignupController::class, 'verifyAdvertiser']);
         Route::post('/register', [SignupController::class, 'register']);
-        Route::post('/register-merchant', [SignupController::class, 'registerMerchant']);
-        Route::post('/register-advertiser', [SignupController::class, 'registerAdvertiser']);
         Route::post('/register-offline', [SignupController::class, 'registerOffline']);
     });
 
@@ -430,6 +429,33 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
             [DeliveryBoyAddressController::class, 'update']
         );
         Route::delete('/address/{deliveryBoy}/{address}', [DeliveryBoyAddressController::class, 'destroy']);
+    });
+
+
+    Route::prefix('advertisers')->name('advertisers.')->group(function () {
+        Route::get('/', [AdvertisersController::class, 'index']);
+        Route::post('/', [AdvertisersController::class, 'store']);
+        Route::get('/show/{advertisers}', [AdvertisersController::class, 'show']);
+        Route::match(['put', 'patch'], '/{advertisers}', [AdvertisersController::class, 'update']);
+        Route::delete('/{advertisers}', [AdvertisersController::class, 'destroy']);
+
+        Route::get('/export', [AdvertisersController::class, 'export']);
+        Route::post('/change-password/{advertisers}', [AdvertisersController::class, 'changePassword']);
+        Route::post('/change-image/{advertisers}', [AdvertisersController::class, 'changeImage']);
+
+        Route::get('/my-order/{advertisers}', [AdvertisersController::class, 'myOrder']);
+        Route::get('/delivered-order/{advertisers}', [AdvertisersOrderController::class, 'deliveredOrder']);
+        Route::get('/delivered-order/show/{advertisers}/{order}', [AdvertisersOrderController::class, 'deliveredOrderDetails']);
+
+        Route::get('/address/{advertisers}', [AdvertisersAddressController::class, 'index']);
+        Route::get('/address/show/{advertisers}/{address}', [AdvertisersAddressController::class, 'show']);
+        Route::post('/address/{advertisers}', [AdvertisersAddressController::class, 'store']);
+        Route::match(
+            ['put', 'patch'],
+            '/address/{advertisers}/{address}',
+            [AdvertisersAddressController::class, 'update']
+        );
+        Route::delete('/address/{advertisers}/{address}', [AdvertisersAddressController::class, 'destroy']);
     });
 
     Route::prefix('coupon')->name('coupon.')->group(function () {

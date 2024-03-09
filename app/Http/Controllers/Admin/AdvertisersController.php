@@ -17,13 +17,13 @@ use App\Http\Requests\UserChangePasswordRequest;
 
 class AdvertisersController extends AdminController
 {
-    private AdvertisersService $deliveryBoyService;
+    private AdvertisersService $advertisersService;
     private OrderService $orderService;
 
-    public function __construct(AdvertisersService $deliveryBoyService, OrderService $orderService)
+    public function __construct(AdvertisersService $advertisersService, OrderService $orderService)
     {
         parent::__construct();
-        $this->deliveryBoyService = $deliveryBoyService;
+        $this->advertisersService = $advertisersService;
         $this->orderService = $orderService;
         $this->middleware(['permission:delivery-boys'])->only('index', 'export', 'changePassword', 'changeImage', 'myOrder');
         $this->middleware(['permission:delivery-boys_create'])->only('store');
@@ -35,7 +35,7 @@ class AdvertisersController extends AdminController
     public function index(PaginateRequest $request): \Illuminate\Http\Response | \Illuminate\Http\Resources\Json\AnonymousResourceCollection | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return DeliveryBoyResource::collection($this->deliveryBoyService->list($request));
+            return DeliveryBoyResource::collection($this->advertisersService->list($request));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
@@ -44,35 +44,35 @@ class AdvertisersController extends AdminController
     public function store(DeliveryBoyRequest $request): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return new DeliveryBoyResource($this->deliveryBoyService->store($request));
+            return new DeliveryBoyResource($this->advertisersService->store($request));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
 
-    public function update(DeliveryBoyRequest $request, User $deliveryBoy): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function update(DeliveryBoyRequest $request, User $advertisers): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return new DeliveryBoyResource($this->deliveryBoyService->update($request, $deliveryBoy));
+            return new DeliveryBoyResource($this->advertisersService->update($request, $advertisers));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
 
-    public function destroy(User $deliveryBoy): \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function destroy(User $advertisers): \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            $this->deliveryBoyService->destroy($deliveryBoy);
+            $this->advertisersService->destroy($advertisers);
             return response('', 202);
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
 
-    public function show(User $deliveryBoy): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function show(User $advertisers): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return new DeliveryBoyResource($this->deliveryBoyService->show($deliveryBoy));
+            return new DeliveryBoyResource($this->advertisersService->show($advertisers));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
@@ -81,7 +81,7 @@ class AdvertisersController extends AdminController
     public function export(PaginateRequest $request): \Illuminate\Http\Response | \Symfony\Component\HttpFoundation\BinaryFileResponse | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return Excel::download(new AdvertisersExport($this->deliveryBoyService, $request), 'Delivery-Boy.xlsx');
+            return Excel::download(new AdvertisersExport($this->advertisersService, $request), 'Delivery-Boy.xlsx');
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
@@ -90,25 +90,25 @@ class AdvertisersController extends AdminController
     public function changePassword(UserChangePasswordRequest $request, User $deliveryBoy): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return new DeliveryBoyResource($this->deliveryBoyService->changePassword($request, $deliveryBoy));
+            return new DeliveryBoyResource($this->advertisersService->changePassword($request, $deliveryBoy));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
 
-    public function changeImage(ChangeImageRequest $request, User $deliveryBoy): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function changeImage(ChangeImageRequest $request, User $advertisers): \Illuminate\Http\Response | DeliveryBoyResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return new DeliveryBoyResource($this->deliveryBoyService->changeImage($request, $deliveryBoy));
+            return new DeliveryBoyResource($this->advertisersService->changeImage($request, $advertisers));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
 
-    public function myOrder(PaginateRequest $request, User $deliveryBoy) : \Illuminate\Http\Response | \Illuminate\Http\Resources\Json\AnonymousResourceCollection | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function myOrder(PaginateRequest $request, User $advertisers) : \Illuminate\Http\Response | \Illuminate\Http\Resources\Json\AnonymousResourceCollection | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
     {
         try {
-            return OrderResource::collection($this->orderService->userOrder($request, $deliveryBoy));
+            return OrderResource::collection($this->orderService->userOrder($request, $advertisers));
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }

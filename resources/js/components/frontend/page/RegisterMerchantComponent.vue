@@ -1,7 +1,7 @@
 <template>
     <LoadingComponent :props="loading" />
     <section class="pt-8 pb-16">
-        <div class="container max-w-[550px] py-6 p-4 sm:px-6 shadow-xs rounded-2xl bg-white">
+        <div class="container max-w-[600px] py-8 p-4 sm:px-8 shadow-xs rounded-2xl bg-white">
             <h2 class="capitalize mb-6 text-center text-[22px] font-semibold leading-[34px] text-heading">
                 {{ $t('label.create_account') }}
             </h2>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-12 sm:col-6">
                         <label class="text-sm capitalize mb-1 text-heading">{{ $t('label.country') }}</label>
-                        <select v-model="props.form.country" class="text-sm capitalize appearance-none pl-4 pr-10 h-[38px] rounded border border-primary bg-white text-primary">
+                        <select v-model="props.form.country" class="w-full h-12 rounded-lg border px-4 border-[#D9DBE9]">
                                 <option value="" disabled selected hidden>{{ $t('label.select_country_of_residence') }}</option>
                                 <option v-for="country in countries" :value="country.id">
                                     {{ country.name }}
@@ -117,7 +117,7 @@ export default {
     },
     mounted() {
        this.verify();
-    }, 
+    },
     methods: {
         save: function () {
             try {
