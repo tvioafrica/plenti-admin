@@ -91,6 +91,7 @@ class TransactionService
                 $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
                 $transaction->entry             = $transactionRequest->entry;
+                $transaction->entry_json        = $transactionRequest->entry;
                 $transaction->save();
                 break;
             }
