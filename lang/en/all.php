@@ -43,7 +43,7 @@ return [
         'size'             => 'Size',
     ],
     'message' => [
-        'insufficient_balance'            => 'Insufficient Balance.',
+        'insufficient_balance'        => 'Insufficient Balance.',
         'validation_error'            => 'Validation Error.',
         'credentials_error'           => 'Credentials errors.',
         'credentials_invalid'         => 'Invalid credentials or you are blocked',
