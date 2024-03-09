@@ -128,7 +128,7 @@ class SignupController extends Controller
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => "http://localhost:8000/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
             
@@ -183,7 +183,7 @@ class SignupController extends Controller
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => "http://localhost:8000/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
+                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$token."&email=".$request->post('email') //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
             
