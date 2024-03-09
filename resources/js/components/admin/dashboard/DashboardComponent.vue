@@ -10,8 +10,9 @@
         <h4 class="font-medium text-[22px] leading-[34px] capitalize">{{ authInfo.name }}</h4>
 
     </div>
-
-    <AdvertisersComponent />
+    <div class="admin" v-if="authInfo.role_id == 3">
+        <AdvertisersComponent />
+    </div>
 
     <div class="admin" v-if="authInfo.role_id == 1">
         <!--========OVERVIEW START=============-->
