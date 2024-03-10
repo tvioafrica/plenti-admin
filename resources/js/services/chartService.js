@@ -40,14 +40,14 @@ export default {
                 type: 'category'
              },
              legend: {
-                enabled: false
+                enabled: true
             },
             plotOptions: {
                 series: {
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
-                        format: '{point.y:.1f}%'
+                        format: '{point.y} Items'
                     }
                 }
             },
