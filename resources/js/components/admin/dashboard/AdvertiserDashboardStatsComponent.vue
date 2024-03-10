@@ -4,6 +4,7 @@
     <div class="mb-9">
         <h4 class="font-semibold text-[22px] leading-[34px] mb-3 capitalize">{{ $t("menu.overview") }}</h4>
         <div class="row">
+
             <div class="col-12 sm:col-6 xl:col-3">
                 <div class="p-4 rounded-lg flex items-center gap-4 bg-[#FF4F99]">
                     <div class="w-12 h-12 rounded-full flex items-center justify-center bg-white">
@@ -15,18 +16,19 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-12 sm:col-6 xl:col-3">
                 <div class="p-4 rounded-lg flex items-center gap-4 bg-[#8262FE]">
                     <div class="w-12 h-12 rounded-full flex items-center justify-center bg-white">
                         <i class="lab lab-total-orders lab-font-size-24 lab-color-portage"></i>
                     </div>
                     <div>
-                        <h3 class="font-medium text-white">Participating  Stores</h3>
+                        <h3 class="font-medium text-white">Participating Stores</h3>
                         <h4 class="font-semibold text-[22px] leading-[34px] text-white">{{ dashboadStats.stores }}</h4>
                     </div>
                 </div>
             </div>
-            <div class="col-12 sm:col-6 xl:col-3">
+            <div class="col-12 sm:col-6 xl:col-3" style="cursor: pointer;" @click="redirectToTransaction">
                 <div class="p-4 rounded-lg flex items-center gap-4 bg-[#567DFF]">
                     <div class="w-12 h-12 rounded-full flex items-center justify-center bg-white">
                         <i class="lab lab-total-customers lab-font-size-24 lab-color-cornflower-blue"></i>
@@ -64,6 +66,15 @@ export default {
                 isActive: false,
             },
         };
+    },
+    methods: {
+        redirectToTransaction() {
+            this.$router.push(
+                {
+                    path: '/admin/transactions',
+                }
+            )
+        }
     },
 
 }
