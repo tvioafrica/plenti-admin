@@ -40,7 +40,7 @@
                                     class="db-field-control">
                             </div>
 
-                            <div class="col-12 sm:col-6 md:col-4 xl:col-3">
+                            <div class="col-12 sm:col-6 md:col-4 xl:col-3"  v-if="authInfo.role_id != 9">
                                 <label for="payment_method" class="db-field-title after:hidden">{{
                                     $t('label.payment_method')
                                 }}</label>
