@@ -5,58 +5,60 @@
             <img class="w-full" :src="setting.theme_logo" alt="logo">
         </router-link>
         <div class="flex items-center justify-end w-full gap-4">
-            <div
-                class="sub-header flex items-center gap-4 transition xh:justify-between xh:fixed xh:left-0 xh:w-full xh:p-4 xh:border-y xh:border-[#EFF0F6] xh:bg-white">
-                <div v-if="authBranch === 0" class="relative dropdown-group">
-                    <button class="flex items-center text-left gap-2 dropdown-btn">
-                        <i class="lab lab-shop lab-font-size-24 font-fill-primary"></i>
-                        <h3 class="capitalize text-xs font-medium text-heading">
-                            <span class="block font-normal mb-0.5">{{ $t('label.branch') }}</span>
-                            <b class="font-semibold whitespace-nowrap">{{ branch.name }}</b>
-                        </h3>
-                        <i class="lab lab-arrow-down text-xs ml-1.5 lab-font-size-14"></i>
-                    </button>
-                    <ul v-if="branches.length > 0"
-                        class="p-2 w-fit rounded-lg shadow-xl absolute top-14 left-0 z-10 border border-gray-200 bg-white hidden dropdown-list">
-                        <li v-for="branch in branches"
-                            class="flex items-center gap-2 w-full px-2.5 rounded-md transition hover:bg-gray-100">
-                            <input @click="changeBranch(branch.id)" v-model="defaultBranch" type="radio"
-                                :id="'branch_id_' + branch.id" :value="branch.id" name="branch"
-                                class="w-3 cursor-pointer mb-[1px] accent-primary">
-                            <label :for="'branch_id_' + branch.id"
-                                class="capitalize leading-8 text-sm min-w-[150px] cursor-pointer text-heading">
-                                {{ branch.name }}
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="flex items-center justify-between md:justify-center gap-4">
-                    <div v-if="setting.site_language_switch === enums.activityEnum.ENABLE" class="dropdown-group relative">
-                        <button class="dropdown-btn flex items-center gap-2 h-9 px-3 rounded-lg bg-[#FFEDF4]">
-                            <img :src="language.image" alt="flag" class="w-4 h-4 rounded-full">
-                            <span class="hidden md:block whitespace-nowrap text-xs font-medium capitalize text-heading">
-                                {{ language.name }}
-                            </span>
+           <div v-if="authInfo.role_id != 9">
+                <div
+                    class="sub-header flex items-center gap-4 transition xh:justify-between xh:fixed xh:left-0 xh:w-full xh:p-4 xh:border-y xh:border-[#EFF0F6] xh:bg-white">
+                    <div v-if="authBranch === 0" class="relative dropdown-group">
+                        <button class="flex items-center text-left gap-2 dropdown-btn">
+                            <i class="lab lab-shop lab-font-size-24 font-fill-primary"></i>
+                            <h3 class="capitalize text-xs font-medium text-heading">
+                                <span class="block font-normal mb-0.5">{{ $t('label.branch') }}</span>
+                                <b class="font-semibold whitespace-nowrap">{{ branch.name }}</b>
+                            </h3>
+                            <i class="lab lab-arrow-down text-xs ml-1.5 lab-font-size-14"></i>
                         </button>
-                        <ul v-if="languages.length > 0"
-                            class="p-2 min-w-[180px] rounded-lg shadow-xl absolute top-14 right-0 z-10 border border-gray-200 bg-white hidden dropdown-list">
-                            <li @click="changeLanguage(language.id, language.code)" v-for="language in languages"
-                                class="flex items-center gap-2 py-1.5 px-2.5 rounded-md cursor-pointer hover:bg-gray-100">
-                                <img :src="language.image" alt="flag" class="w-4 h-4 rounded-full">
-                                <span class="text-heading capitalize text-sm">{{ language.name }}</span>
+                        <ul v-if="branches.length > 0"
+                            class="p-2 w-fit rounded-lg shadow-xl absolute top-14 left-0 z-10 border border-gray-200 bg-white hidden dropdown-list">
+                            <li v-for="branch in branches"
+                                class="flex items-center gap-2 w-full px-2.5 rounded-md transition hover:bg-gray-100">
+                                <input @click="changeBranch(branch.id)" v-model="defaultBranch" type="radio"
+                                    :id="'branch_id_' + branch.id" :value="branch.id" name="branch"
+                                    class="w-3 cursor-pointer mb-[1px] accent-primary">
+                                <label :for="'branch_id_' + branch.id"
+                                    class="capitalize leading-8 text-sm min-w-[150px] cursor-pointer text-heading">
+                                    {{ branch.name }}
+                                </label>
                             </li>
                         </ul>
                     </div>
 
-                    <router-link v-if="pos.permission"
-                        class="w-9 h-9 rounded-lg flex items-center justify-center bg-[#FFEBD8]"
-                        :to="{ path: '/admin/' + pos.url }">
-                        <i class="lab lab-pos-bold lab-font-size-16 font-fill-pos"></i>
-                    </router-link>
+                    <div class="flex items-center justify-between md:justify-center gap-4">
+                        <div v-if="setting.site_language_switch === enums.activityEnum.ENABLE" class="dropdown-group relative">
+                            <button class="dropdown-btn flex items-center gap-2 h-9 px-3 rounded-lg bg-[#FFEDF4]">
+                                <img :src="language.image" alt="flag" class="w-4 h-4 rounded-full">
+                                <span class="hidden md:block whitespace-nowrap text-xs font-medium capitalize text-heading">
+                                    {{ language.name }}
+                                </span>
+                            </button>
+                            <ul v-if="languages.length > 0"
+                                class="p-2 min-w-[180px] rounded-lg shadow-xl absolute top-14 right-0 z-10 border border-gray-200 bg-white hidden dropdown-list">
+                                <li @click="changeLanguage(language.id, language.code)" v-for="language in languages"
+                                    class="flex items-center gap-2 py-1.5 px-2.5 rounded-md cursor-pointer hover:bg-gray-100">
+                                    <img :src="language.image" alt="flag" class="w-4 h-4 rounded-full">
+                                    <span class="text-heading capitalize text-sm">{{ language.name }}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <router-link v-if="pos.permission"
+                            class="w-9 h-9 rounded-lg flex items-center justify-center bg-[#FFEBD8]"
+                            :to="{ path: '/admin/' + pos.url }">
+                            <i class="lab lab-pos-bold lab-font-size-16 font-fill-pos"></i>
+                        </router-link>
+                    </div>
                 </div>
             </div>
-            <button class="fa-solid fa-align-left db-header-nav w-9 h-9 rounded-lg text-primary bg-primary/5"></button>
+                <button class="fa-solid fa-align-left db-header-nav w-9 h-9 rounded-lg text-primary bg-primary/5"></button>
 
             <div class="dropdown-group">
                 <button class="dropdown-btn flex items-center gap-2">

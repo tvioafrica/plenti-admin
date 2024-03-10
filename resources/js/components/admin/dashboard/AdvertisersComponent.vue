@@ -122,11 +122,11 @@ export default {
                     categories.push(element.category)
                 })
                 this.dailyTrend = chartService.plotSingleLineAreaChat(
-                    "Impressions",
+                    "Transactions",
                     categories,
                     series,
-                    "Daily impression by dates",
-                    "Total Impressions");
+                    "Daily transactions by dates",
+                    "Total transactions");
                 this.loading.isActive = false;
             }).catch((err) => {
                 this.loading.isActive = false;
