@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use App\Enums\Role;
 use Exception;
 use App\Models\User;
 use App\Models\Transaction;
@@ -36,7 +36,7 @@ class TransactionService
 
             return Transaction::with('stores', 'customer','order')->where(function ($query) use ($requests) {
 
-                if ( Auth::user()->myrole) {
+                if ( Auth::user()->myrole == Role::ADVERTISER) {
                         $query->where(['type' => "promo"]);
                 }
   /*

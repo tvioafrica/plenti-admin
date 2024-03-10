@@ -21,7 +21,7 @@
                         <i class="lab lab-total-orders lab-font-size-24 lab-color-portage"></i>
                     </div>
                     <div>
-                        <h3 class="font-medium text-white">Total Stores</h3>
+                        <h3 class="font-medium text-white">Participating  Stores</h3>
                         <h4 class="font-semibold text-[22px] leading-[34px] text-white">{{ dashboadStats.stores }}</h4>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <i class="lab lab-total-customers lab-font-size-24 lab-color-cornflower-blue"></i>
                     </div>
                     <div>
-                        <h3 class="font-medium text-white">Total Impressions</h3>
+                        <h3 class="font-medium text-white">Total Transactions</h3>
                         <h4 class="font-semibold text-[22px] leading-[34px] text-white">{{ dashboadStats.impressions }}</h4>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         <i class="lab lab-total-menu-items lab-font-size-24 lab-color-heliotrope"></i>
                     </div>
                     <div>
-                        <h3 class="font-medium text-white">Total Participants</h3>
+                        <h3 class="font-medium text-white">Total Shoppers</h3>
                         <h4 class="font-semibold text-[22px] leading-[34px] text-white">{{ dashboadStats.customers }}</h4>
                     </div>
                 </div>

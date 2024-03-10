@@ -89,7 +89,6 @@ export default {
     },
     computed: {
         authInfo: function () {
-            console.log(this.$store.getters.authInfo)
             return this.$store.getters.authInfo;
         }
     },

@@ -89,8 +89,9 @@
                                 <th class="db-table-head-th">Customer Name</th>
                                 <th class="db-table-head-th">Customer Contact</th>
                                 <th class="db-table-head-th">Store Name</th>
-                                <th class="db-table-head-th">{{ $t('label.amount') }}</th>
-                                <th class="db-table-head-th">{{ $t('label.point_earned') }}</th>
+                                <th class="db-table-head-th" v-if="authInfo.role_id == 9">Selected Products</th>
+                                <th class="db-table-head-th" v-if="authInfo.role_id != 9">{{ $t('label.amount') }}</th>
+                                <th class="db-table-head-th" v-if="authInfo.role_id != 9">{{ $t('label.point_earned') }}</th>
                             </tr>
                         </thead>
                         <tbody class="db-table-body" v-if="transactions.length > 0">
@@ -113,7 +114,10 @@
                                 <td class="db-table-body-td">
                                     {{ transaction.stores[0].name }}
                                 </td>
-                                <td class="db-table-body-td">
+                                <td class="db-table-body-td" v-if="authInfo.role_id == 9">
+                                    {{ transaction.entry }}
+                                </td>
+                                <td class="db-table-body-td" v-if="authInfo.role_id != 9">
                                     <span class="text-[#2AC769]" v-if="transaction.sign == '+'">
                                         {{ transaction.sign }} {{ transaction.amount }}
                                     </span>
@@ -121,7 +125,7 @@
                                         {{ transaction.sign }} {{ transaction.amount }}
                                     </span>
                                 </td>
-                                <td class="db-table-body-td">
+                                <td class="db-table-body-td" v-if="authInfo.role_id != 9">
                                     {{(transaction.type == 'burn') ? "-"+transaction.creds : transaction.creds }}
                                 </td>
 
@@ -244,6 +248,9 @@ export default {
     computed: {
         transactions: function () {
             return this.$store.getters['transaction/lists'];
+        },
+        authInfo: function () {
+            return this.$store.getters.authInfo;
         },
         paymentGateways: function () {
             return this.$store.getters['paymentGateway/lists'];

@@ -30,6 +30,7 @@ class TransactionResource extends JsonResource
             'customer'        => $this->customer,
             'type'            => $this->type,
             'sign'            => $this->sign,
+            'entry'           => $this->entry,
             'date'            => AppLibrary::datetime($this->created_at)
         ];
     }

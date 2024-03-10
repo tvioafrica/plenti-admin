@@ -128,7 +128,9 @@ export default {
                     if (this.carts.length > 0) {
                         router.push({name: "frontend.checkout"});
                     } else {
-                        router.push({name: "frontend.home"});
+
+                        router.push({name: "admin.dashboard"});
+                        //router.push({name: "frontend.home"});
                     }
                 }).catch((err) => {
                     this.loading.isActive = false;
