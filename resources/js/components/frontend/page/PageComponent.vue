@@ -8,13 +8,13 @@
                 <div v-if="page.image" class="w-full mb-6">
                     <img :src="page.image" alt="image">
                 </div>
+
                 <p class="text-xs text-center">
+
                     {{ page.description }}
                 </p>
             </div>
             <TemplateManagerComponent :templateId="page.template_id" />
-
-
         </div>
     </section>
 </template>

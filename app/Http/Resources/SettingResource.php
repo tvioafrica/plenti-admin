@@ -84,6 +84,7 @@ class SettingResource extends JsonResource
             'image_order_rejected'                 => asset('/images/order/rejected.gif'),
             'image_order_canceled'                 => asset('/images/order/canceled.gif'),
             'image_order_returned'                 => asset('/images/order/returned.gif'),
+            'image_success_registration'           => asset('/images/default/pay-success.gif'),
             'image_four_zero_four_page'            => asset('/images/accessible/404.gif'),
             'image_four_zero_three_page'           => asset('/images/accessible/403.gif'),
         ];

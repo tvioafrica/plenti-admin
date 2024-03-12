@@ -123,7 +123,7 @@ class SignupController extends Controller
                 ]);
                 $user->assignRole(EnumRole::BRANCH_MANAGER);
                 $token = random_int(10000, 99999);
-                $securedToken = base64_encode($token);
+                $securedToken = md5($token);
                 $user->verify_code = $securedToken;
                 $user->save();
                 $details = [
@@ -182,7 +182,7 @@ class SignupController extends Controller
                 ]);
                 $user->assignRole(EnumRole::ADVERTISER);
                 $token = random_int(10000, 99999);
-                $securedToken = base64_encode($token);
+                $securedToken = md5($token);
                 $user->verify_code = $securedToken;
                 $user->save();
                 $details = [
