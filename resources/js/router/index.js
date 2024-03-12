@@ -4,6 +4,7 @@ import appService from "../services/appService";
 import DashboardComponent from "../components/admin/dashboard/DashboardComponent";
 import NotFoundComponent from "../components/frontend/otherPage/NotFoundComponent";
 import ExceptionComponent from "../components/frontend/otherPage/ExceptionComponent";
+import SuccessRegComponent from "../components/frontend/otherPage/SuccessRegComponent";
 import store from "../store";
 import authRoutes from "./modules/authRoutes";
 import settingRoutes from "./modules/settingRoutes";
@@ -49,6 +50,11 @@ const baseRoutes = [
         path: "/exception",
         name: "route.exception",
         component: ExceptionComponent,
+    },
+    {
+        path: "/success-page",
+        name: "route.register.success",
+        component: SuccessRegComponent,
     },
     {
         path: "/admin/dashboard",
