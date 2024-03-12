@@ -1,17 +1,7 @@
 <template>
     <LoadingComponent :props="loading" />
-    
-    <section v-if="concluded === true" class="pt-8 pb-16">
-        <div class="row mb-7">
-            <div class="col-12 sm:col-12 mb-2"> 
-                <div class="flex items-center gap-2 mb-3">
-                    <h3 class="font-semibold leading-4 text-[16px]"> Your account has now been verified! You can now login! </h3>
-                </div>    
-            </div>
-        </div>
-    </section>
 
-    <section v-if="concluded === false" class="pt-8 pb-16">
+    <section class="pt-8 pb-16">
         <div class="container max-w-[600px] py-8 p-4 sm:px-8 shadow-xs rounded-2xl bg-white">
             <h2 class="capitalize mb-6 text-center text-[22px] font-semibold leading-[34px] text-heading">
                 {{ $t('label.create_account') }}
@@ -164,12 +154,13 @@ export default {
                             phone: "",
                             type: "null"
                         };
+                        this.$router.push({name: "route.register.success", query: { type: 'registration' } });
                     }).catch((err) => {
                         this.loading.isActive = false;
                         this.errors = err.response.data.errors;
                         alertService.error(err.response.data.message);
                     });
-                }//
+                }
                 else if (this.props.form.type === "advertiser") {
                     this.loading.isActive = true;
                     this.$store.dispatch("frontendSignupAdvertiser/signup", this.props.form).then((res) => {
@@ -184,6 +175,7 @@ export default {
                             phone: "",
                             type: "null"
                         };
+                        this.$router.push({name: "route.register.success", query: { type: 'registration' } });
                     }).catch((err) => {
                         this.loading.isActive = false;
                         this.errors = err.response.data.errors;
@@ -205,7 +197,7 @@ export default {
                         this.loading.isActive = false;
                         alertService.success(res.data.message, 'bottom-center');
                         this.concluded = true;
-                        //this.$router.push({name: "auth.login"});
+                        this.$router.push({name: "route.register.success", query: { type: 'verify' } });
                     }).catch((err) => {
                         this.loading.isActive = false;
                         alertService.error(err.response.data.message);
