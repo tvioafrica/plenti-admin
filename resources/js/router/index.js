@@ -55,6 +55,9 @@ const baseRoutes = [
         path: "/success-page",
         name: "route.register.success",
         component: SuccessRegComponent,
+        meta: {
+            isFrontend: true,
+        },
     },
     {
         path: "/admin/dashboard",

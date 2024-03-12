@@ -2,19 +2,17 @@
     <section class="pt-8 pb-16">
         <div class="container max-w-8xl">
             <div class="mb-6">
-                <h2 class="text-[26px] leading-10 font-semibold capitalize mb-2">
+                <h2 class="text-[26px] leading-10 font-semibold capitalize mb-2 text-center">
                     {{ page.title }}
                 </h2>
                 <div v-if="page.image" class="w-full mb-6">
                     <img :src="page.image" alt="image">
                 </div>
-                <p class="text-xs text-heading">
+                <p class="text-xs text-heading text-center">
                     {{ page.description }}
                 </p>
             </div>
             <TemplateManagerComponent :templateId="page.template_id" />
-
-
         </div>
     </section>
 </template>
