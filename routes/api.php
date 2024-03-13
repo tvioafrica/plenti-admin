@@ -653,6 +653,11 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
 });
 
 Route::prefix('frontend')->name('frontend.')->middleware(['installed', 'apiKey', 'localization'])->group(function () {
+
+    Route::prefix('operators')->name('operators.')->group(function () {
+        Route::get('/', [SettingController::class, 'operators']);
+    });
+
     Route::prefix('setting')->name('setting.')->group(function () {
         Route::get('/', [SettingController::class, 'index']);
     });
