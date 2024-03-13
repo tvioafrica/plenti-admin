@@ -1,0 +1,28 @@
+name: Build frontend and deploy to ftp hosting
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy 🚀
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build production assets
+        run: npm run prod
+
+      - name: Sync files to hosting
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.FTP_SERVER }}
+          remote-user: ${{ secrets.FTP_USERNAME }}
+          private-ssh-key: ${{ secrets.SSH_KEY }}
+          destination-path: /home/plenti/public_html/
