@@ -16,6 +16,10 @@ export const dashboard = {
         getTransactionByGender: [],
         getProductCategory: [],
         trends: [],
+        getMerchantStats: [],
+        getMerchantTransactionByGender: [],
+        getTopShoppers: [],
+        merchantTrends: [],
         featuredItems: [],
         mostPopularItems: [],
         topCustomers: [],
@@ -66,6 +70,18 @@ export const dashboard = {
         },
         trends: function (state) {
             return state.getAdvertisersStats;
+        },
+        getMerchatStats: function (state) {
+            return state.getMerchantStats;
+        },
+        getMerchantTransactionByGender: function (state) {
+            return state.getMerchantTransactionByGender;
+        },
+        getTopShoppers: function (state) {
+            return state.getTopShoppers;
+        },
+        merchantTrends: function (state) {
+            return state.merchantTrends;
         },
     },
 
@@ -281,6 +297,66 @@ export const dashboard = {
                     });
             });
         },
+        getMerchantStats: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-merchant-stats";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getMerchantStats", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        getMerchantTransactionByGender: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-merchant-transaction-by-gender";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getMerchantTransactionByGender", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        getTopShoppers: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/get-top-shoppers";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("getTopShoppers", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
+        merchantTrends: function (context,payload) {
+            return new Promise((resolve, reject) => {
+                let url = "admin/dashboard/merchant-trends";
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                        context.commit("merchantTrends", res.data.data);
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            });
+        },
     },
 
     mutations: {
@@ -328,6 +404,18 @@ export const dashboard = {
         },
         trends: function (state, payload) {
             state.trends = payload;
+        },
+        getMerchantStats: function (state, payload) {
+            state.getMerchantStats = payload;
+        },
+        getMerchantTransactionByGender: function (state, payload) {
+            state.getTransactionByGender = payload;
+        },
+        getTopShoopers: function (state, payload) {
+            state.getTopShoopers = payload;
+        },
+        merchantTrends: function (state, payload) {
+            state.merchantTrends = payload;
         },
     },
 };

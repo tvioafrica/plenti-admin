@@ -317,4 +317,105 @@ class DashboardService
         return $series;
     }
 
+    public function getMerchantStats(Request $request)
+    {
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+
+        return collect(
+        DB::select('call getMerchantDashboardStats(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )))->first();
+    }
+
+    public function getMerchantTransactionByGender(Request $request)
+    {
+        $series = [];
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $genderData =  collect(DB::select('call getMerchantTransactionsByGender(?,?,?)',
+         array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )))->first();
+
+        $series['total'] = $genderData->total;
+
+        $series['gender'][0]['name'] = "Male";
+        $series['gender'][0]['y'] = (int) $genderData->male;
+
+        $series['gender'][1]['name'] = "Female";
+        $series['gender'][1]['y'] = (int) $genderData->female;
+
+        $series['gender'][2]['name'] = "Undisclosed";
+        $series['gender'][2]['y'] = (int) $genderData->undisclosed;
+
+        return $series;
+    }
+
+    public function getTopShoppers(Request $request)
+    {
+        $series = [];
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $topProducts =  DB::select('call getTopShoppers(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        )
+        );
+        foreach($topProducts as $key => $product){
+            $series[$key]['name'] = $product->item;
+            $series[$key]['y'] = $product->total_count;
+        }
+        return $series;
+    }
+
+    public function getMerchantTransactionTrend(Request $request)
+    {
+        $series = [];
+
+        if ($request->first_date && $request->last_date) {
+            $first_date = Date('Y-m-d', strtotime($request->first_date));
+            $last_date  = Date('Y-m-d', strtotime($request->last_date));
+        } else {
+            $first_date = Date('Y-m-01', strtotime(Carbon::today()->toDateString()));
+            $last_date  = Date('Y-m-t', strtotime(Carbon::today()->toDateString()));
+        }
+        $dataSet =  DB::select('call getMerchantTransactionTrend(?,?,?)',
+        array(
+            Auth::user()->id,
+            $first_date,
+            $last_date
+        ));
+        foreach($dataSet as $key => $data){
+            $series[$key]['category'] = $data->transaction_day;
+            $series[$key]['series'] = $data->total_transactions;
+        }
+        return $series;
+    }
+
+
+
+
 }

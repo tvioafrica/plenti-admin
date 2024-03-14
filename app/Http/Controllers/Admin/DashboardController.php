@@ -193,4 +193,56 @@ class DashboardController extends AdminController
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
+
+    public function getMerchantStats(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getMerchantStats($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function getMerchantTransactionByGender(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getMerchantTransactionByGender($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function getTopShoppers(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getTopShoppers($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function merchantTrends(
+        Request $request
+    ): \Illuminate\Http\Response | CustomerStatesResource | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
+        try {
+            return response([
+                'status' => true,
+                'data' =>$this->dashboardService->getMerchantTransactionTrend($request)
+            ], 201);
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
 }
