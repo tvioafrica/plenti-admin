@@ -94,6 +94,7 @@ class TransactionService
                 $transaction->branch_id         = $transactionRequest->branch->id;
                 $transaction->merchant_id       = $transactionRequest->branch->id;
                 $transaction->store_id          = $transactionRequest->branch->id;
+                $transaction->operator          = $transactionRequest->operator;
                 $transaction->transaction       = $transactionRequest->transaction_type;
                 $transaction->receipt           = time();
                 $transaction->entry             = json_encode($transactionRequest->entry);
@@ -110,6 +111,7 @@ class TransactionService
                 $transaction->ref               = $transactionRequest->ref;
                 $transaction->commission        = $transactionRequest->commission;
                 $transaction->customer_id       = $transactionRequest->customer_id;
+                $transaction->operator          = $transactionRequest->operator;
                 $transaction->creds             = $transactionRequest->creds;
                 $transaction->branch_id         = $transactionRequest->branch->id;
                 $transaction->merchant_id       = $transactionRequest->branch->id;
