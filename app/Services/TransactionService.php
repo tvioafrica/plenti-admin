@@ -74,9 +74,10 @@ class TransactionService
         TransactionRequest $transactionRequest
         )
     {
+
         $itemData = array(
             "items"=>$transactionRequest->entry,
-            "total"=> 3
+            "total"=> count($transactionRequest->entry)
         );
         switch($transactionRequest->transaction_type){
             case "promo" : {

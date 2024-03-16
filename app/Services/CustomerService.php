@@ -287,7 +287,7 @@ class CustomerService
                     $transactionRequest->commission         = 0;
                     $transactionRequest->transaction_type   = $request->transaction_type;
                     $transactionRequest->branch             = $branch;
-                    $transactionRequest->entry              = $request->entry;
+                    $transactionRequest->entry              = $this->convertAPIStringToArray($request->entry);
                     $this->transactionService->saveTransactionLog($transactionRequest);
                     break;
                 }
