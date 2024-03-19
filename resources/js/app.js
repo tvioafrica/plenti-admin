@@ -13,7 +13,9 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import VueSimpleAlert from "vue3-simple-alert";
 import VueNextSelect from 'vue-next-select';
+import Multiselect from 'vue-multiselect'
 import 'vue-next-select/dist/index.css';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import ENV from './config/env';
 
 
@@ -58,6 +60,7 @@ axios.interceptors.request.use(
 const app = createApp({});
 app.component('default-component', DefaultComponent);
 app.component('vue-select', VueNextSelect)
+app.component('vue-multi-select', Multiselect)
 app.use(router)
 app.use(store)
 app.use(VueSimpleAlert)

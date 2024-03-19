@@ -18,6 +18,7 @@ import {menuSection} from "./modules/menuSection";
 import {page} from "./modules/page";
 import {notification} from "./modules/notification";
 import {pushNotification} from "./modules/pushNotification";
+import {emailSmsNotification} from "./modules/emailSmsNotification";
 import {menuTemplate} from "./modules/menuTemplate";
 import {coupon} from "./modules/coupon";
 import {customer} from "./modules/customer";
@@ -112,6 +113,7 @@ export default new createStore({
         currency,
         mail,
         pushNotification,
+        emailSmsNotification,
         notification,
         page,
         onlineOrder,
