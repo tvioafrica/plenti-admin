@@ -16,6 +16,7 @@
           type="checkbox"
           :id="'checkbox-' + index"
           :value="option.id"
+          v-model="selectedUsers"
           @change="onChangeCheckbox(option)"
         />
         <label :for="'checkbox-' + index">{{ option.name }}</label>
@@ -34,38 +35,15 @@ export default {
   data() {
     return {
       selectedValues: [],
+      selectedUsers: [],
       containerHeight: 200, 
-      /*options: [
-        { value: 1, label: "Option 1" },
-        { value: 2, label: "Option 2" },
-        { value: 3, label: "Option 3" },
-        { value: 4, label: "Option 4" },
-        { value: 5, label: "Option 5" },
-        { value: 6, label: "Option 6" },
-        { value: 7, label: "Option 7" },
-        { value: 8, label: "Option 8" },
-        { value: 9, label: "Option 9" },
-        { value: 10, label: "Option 10" },
-        { value: 11, label: "Option 11" },
-        { value: 12, label: "Option 12" },
-        { value: 13, label: "Option 13" },
-        { value: 14, label: "Option 14" },
-        { value: 15, label: "Option 15" },
-      ],
-          v-model="selectedValues"
-          @change="onChangeCheckbox"
-      */
       filteredOptions: [],
       searchText: "",
     };
   },
- /* created(){
-    this.filteredOptions = this.$props.options;
-    console.log("option3" + JSON.stringify(this.$props.options))
-  },*/
   watch: {
     options: {
-      immediate: true, // Trigger the watcher immediately on component creation
+      immediate: true,
       handler(newVal) {
         this.filteredOptions = newVal;
       }
@@ -88,7 +66,6 @@ export default {
         this.selectedValues.splice(optionIndex, 1);
       }
       this.$emit("update:selectedValues", this.selectedValues);
-      console.log("nnnnn" + JSON.stringify(this.selectedValues))
     },
   },
 };

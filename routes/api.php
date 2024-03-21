@@ -556,6 +556,7 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
 
     Route::prefix('email-sms')->name('email-sms.')->group(function () {
         Route::get('/', [EmailNSmsController::class, 'index']);
+        Route::get('/users', [EmailNSmsController::class, 'index_user']);
         Route::post('/', [EmailNSmsController::class, 'store']);
         Route::post('/send-message', [EmailNSmsController::class, 'sendMessage']);
         Route::get('/show/{emailnsmsNotification}', [EmailNSmsController::class, 'show']);

@@ -5,7 +5,8 @@ namespace App\Services;
 
 use Exception;
 use App\Models\User;
-//use GuzzleHttp\Client;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 use App\Enums\EmailType;
 use App\Models\EmailNSms;
 use App\Models\EmailNSmsUser;
@@ -26,6 +27,11 @@ class EmailNSmsService
         'type_of'
     ];
 
+    protected array $emailSmsUserNotificationFilter = [
+        'user_id',
+        'email_sms_id'
+    ];
+
     /**
      * @throws Exception
      */
@@ -38,20 +44,38 @@ class EmailNSmsService
             $orderColumn = $request->get('order_column') ?? 'id';
             $orderType   = $request->get('order_type') ?? 'desc';
 
-           /* return EmailNSms::where(function ($query) use ($requests) {
-                foreach ($requests as $key => $request) {
-                    if (in_array($key, $this->emailSmsNotificationFilter)) {
-                        $query->where($key, 'like', '%' . $request . '%');
-                    }
-                }
-            })->orderBy($orderColumn, $orderType)->$method(
-                $methodValue
-            );*/
             $query = EmailNSms::query();
 
             foreach ($requests as $key => $request) {
                 if (in_array($key, $this->emailSmsNotificationFilter)) {
                     $query->where($key, 'like', '%' . $request . '%');
+                }
+            }
+
+            return $query->orderBy($orderColumn, $orderType)->$method(
+                $methodValue
+            );
+
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            throw new Exception($exception->getMessage(), 422);
+        }
+    }
+
+    public function list_users(PaginateRequest $request)
+    { 
+        try {
+            $requests    = $request->all();
+            $method      = $request->get('paginate', 0) == 1 ? 'paginate' : 'get';
+            $methodValue = $request->get('paginate', 0) == 1 ? $request->get('per_page', 10) : '*';
+            $orderColumn = $request->get('order_column') ?? 'id';
+            $orderType   = $request->get('order_type') ?? 'desc';
+
+            $query = EmailNSmsUser::with('email_sms')->with('user');
+
+            foreach ($requests as $key => $request) {
+                if (in_array($key, $this->emailSmsUserNotificationFilter)) {
+                    $query->where($key, '=', $request );
                 }
             }
 
@@ -89,20 +113,22 @@ class EmailNSmsService
     /**
      * @throws Exception
      */
-    public function sendMessage(EmailNSmsTempRequest $request) : EmailNSms
+    public function sendMessage(EmailNSmsTempRequest $request) : bool
     {
         try {
           $rec         = $request->recipients;
           $template_id = $request->email_template_id;
-
+          
           $rec_array = json_decode($rec);
+          Log::info($rec_array);
 
           $chunkedArrays = array_chunk($rec_array, 50 , true);
 
-          $email_sms = EmailNSms::find($template_id);
+          $email_sms = EmailNSms::where('id', $template_id)->first();
 
           if ($email_sms){
-            if ( $email_sms->type_of === EmailType::EMAIL ){
+
+            if ( $email_sms["type_of"] == EmailType::EMAIL ){
                 foreach ($chunkedArrays as $chunk) {
                     for ($i = 0; $i < count($chunk); $i++){
                         $user = User::where('id', $chunk[$i]->id)->first();
@@ -123,7 +149,7 @@ class EmailNSmsService
                     sleep(10);
                 }
             }
-            else if ($email_sms->type_of === EmailType::SMS){
+            else if ($email_sms["type_of"] == EmailType::SMS){
                 foreach ($chunkedArrays as $chunk) {
                     for ($i = 0; $i < count($chunk); $i++){
                         $user = User::where('id', $chunk[$i]->id)->first();
@@ -190,66 +216,40 @@ class EmailNSmsService
         //{ type_of, phone, content } if this is an SMS
         //{ type_of, title, content, email } if this is an EMail
 
-        /*if (!empty($topicName)) {
-            $topic = env('FCM_TOPIC') . '_' . str_replace(['@', '.', '+'], ['_', '_', ''], $topicName);
-        } else {
-            $topic = env('FCM_TOPIC');
-        }*/
-
-       /* $final = [
-            'registration_ids' => $fcmToken,
-            'priority'         => 'high',
-            'notification'     => [
-                'title' => $data->title,
-                'body'  => $data->description,
-                'sound' => 'Default',
-                'image' => $data->image,
-            ],
-            'data'             => [
-                'title' => $data->title,
-                'body'  => $data->description,
-                'sound' => 'Default',
-                'image' => $data->image
-            ]
-        ];*/
-
-        if ($data->type_of === EmailType::SMS){
+        if ($data["type_of"] === EmailType::SMS){
             $url = 'https://api.ng.termii.com/api/sms/send';
 
             //to be changed
             $final = array( 
                 "api_key" => ENV('TERMII_KEY'),
-                "to" => $str = "234".ltrim($data->$phone, "0"),
+                "to" => $str = "234".ltrim($data["phone"], "0"),
                 "from" => "N-Alert",
                 "channel" => "dnd",
-                "sms" => $data->content,
+                "sms" => $data["content"],
                 "type" => "plain"
-            );
-
-            $client  = new Client();
-            $headers = [
-                'Content-Type'  => 'application/json',
-            ];
+            );         
     
             try {
-                $result = $client->post($url, [
-                    'headers' => $headers,
-                    "body"    => json_encode($final)
-                ]);
-                return $result->getBody()->getContents();
+                $result1 = json_decode(
+                    Http::withHeaders([
+                    'Content-type' => 'application/json'
+                ])
+                ->withOptions(['verify' => false])
+                ->post(  $url, $final ));
+                return json_encode($result1);
             } catch (Exception $e) {
                 return $e;
             }
         }
 
-        else if ($data->type_of === EmailType::EMAIL){
+        else if ($data["type_of"] === EmailType::EMAIL){
             try {
                 $details = [
-                    'title' => $data->title,
-                    'content' => $data->content 
+                    'title' => $data["title"],
+                    'content' => $data["content"] 
                 ];
                 
-                return json_encode( Mail::to($data->email)->send(new messageTemplateMail($details)) );
+                return json_encode( Mail::to($data["email"])->send(new messageTemplateMail($details)) );
             } catch (Exception $e) {
                 return $e;
             }

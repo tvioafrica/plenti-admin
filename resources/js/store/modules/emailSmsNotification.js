@@ -6,8 +6,11 @@ export const emailSmsNotification = {
     namespaced: true,
     state: {
         lists: [],
+        lists_user: [],
         page: {},
+        page_user: {},
         pagination: [],
+        pagination_user: [],
         show: {},
         temp: {
             temp_id: null,
@@ -18,12 +21,20 @@ export const emailSmsNotification = {
         lists: function (state) {
             return state.lists;
         },
-
+        lists_user: function (state) {
+            return state.lists_user;
+        },
+        pagination_user: function (state) {
+            return state.pagination_user
+        },
         pagination: function (state) {
             return state.pagination
         },
         page: function (state) {
             return state.page;
+        },
+        page_user: function (state) {
+            return state.page_user;
         },
         show: function (state) {
             return state.show;
@@ -44,6 +55,25 @@ export const emailSmsNotification = {
                         context.commit('lists', res.data.data);
                         context.commit('page', res.data.meta);
                         context.commit('pagination', res.data);
+                    }
+
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
+        },
+        lists_user: function (context, payload) {
+            return new Promise((resolve, reject) => {
+                let url = 'admin/email-sms/users';
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                    if (typeof payload.vuex === "undefined" || payload.vuex === true) {
+                        context.commit('lists_user', res.data.data);
+                        context.commit('page_user', res.data.meta);
+                        context.commit('pagination_user', res.data);
                     }
 
                     resolve(res);
@@ -74,6 +104,8 @@ export const emailSmsNotification = {
                 let method = axios.post;
                 let url = '/admin/email-sms/send-message';               
                 method(url, payload.form).then(res => {
+                    payload.search.role_id = null;
+                    payload.search.title = null;
                     context.dispatch('lists', payload.search).then().catch();
                     context.commit('reset');
                     resolve(res);
@@ -126,12 +158,27 @@ export const emailSmsNotification = {
         lists: function (state, payload) {
             state.lists = payload
         },
+        lists_user: function (state, payload) {
+            state.lists_user = payload
+        },
         pagination: function (state, payload) {
             state.pagination = payload;
+        },
+        pagination_user: function (state, payload) {
+            state.pagination_user = payload;
         },
         page: function (state, payload) {
             if (typeof payload !== "undefined" && payload !== null) {
                 state.page = {
+                    from: payload.from,
+                    to: payload.to,
+                    total: payload.total
+                }
+            }
+        },
+        page_user: function (state, payload) {
+            if (typeof payload !== "undefined" && payload !== null) {
+                state.page_user = {
                     from: payload.from,
                     to: payload.to,
                     total: payload.total

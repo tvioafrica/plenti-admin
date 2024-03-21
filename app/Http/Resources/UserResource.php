@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-
+use App\Http\Resources\RoleResource;
 use App\Libraries\AppLibrary;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             "currency_balance" => AppLibrary::currencyAmountFormat(($this->balance == 0) ? $this->customer_balance : $this->balance),
             "image"            => $this->image,
             "role_id"          => $this->myRole,
+            "role"             => new RoleResource($this->whenLoaded('role')),
             "country_code"     => $this->country_code,
             "order"            => $this->orders->count(),
             'create_date'      => AppLibrary::date($this->created_at),

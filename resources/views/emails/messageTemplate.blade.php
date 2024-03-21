@@ -97,7 +97,11 @@
                                                                     <tr>
                                                                         <td class="mp20-0-0" style="padding: 20px 0px 20px 50px;">
                                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tr> 
+                                                                                    <td style="color:#414042; font-family:'Roboto Slab', Georgia, serif;"> <h2> <b> {{ $details['title'] }} </b> </h2> </td>
+                                                                                </tr>
                                                                                 <tr>
+                                                                                    
                                                                                     <td class="h2 pb20" style="color:#414042; font-family:'Roboto Slab', Georgia, serif; font-size:38px; line-height:45px; text-align:left; padding-bottom:20px; padding-right:20px;">
                                                                                         <multiline>
                                                                                         <p>{{ $details['content'] }}

@@ -25,5 +25,15 @@ class EmailNSmsUser extends Model
        // static::addGlobalScope(new BranchScope());// not sure what this does
     }
 
+    public function email_sms() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(EmailNSms::class, 'email_sms_id', 'id');
+    }
+
+    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 
 }

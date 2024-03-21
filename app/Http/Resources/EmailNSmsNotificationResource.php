@@ -23,6 +23,7 @@ class EmailNSmsNotificationResource extends JsonResource
             'recipients'  => $this->recipients,
             'type_of'     => $this->type_of,
             'branch_id'   => $this->branch_id,
+            'created_at'  => $this->created_at
         ];
     }
 }

@@ -270,16 +270,21 @@ export default {
                 alert("Please select the complete list of options before proceeding to send the mail");
                 return 
             }
-            let allusers = this.optionsNew.filter((item) => item.id !== 0 )
+            if (this.optionsNew.length === 1 && this.optionsNew[0].id === 0){
+                alert("Please this user list is empty! Please pick a list of users");
+                return 
+            }
+            //console.log("Parent >>> " + )
+            let allusers      = this.optionsNew.filter((item) => item.id !== 0 );
             const optionIndex = this.parentSelectedValues.findIndex((item) => item.id === 0);
-            if (optionIndex === -1) {
+            if (optionIndex > 0) {
                 this.parentSelectedValues = allusers;
             }
-            //send to controller
             try {
+                //console.log("Parent values: " + JSON.stringify(this.parentSelectedValues));
                 const fd = new FormData();
-                fd.append('email_template_id', this.props.search.title);
-                fd.append('recipients', JSON.stringify(this.parentSelectedValues));
+                fd.append('email_template_id', Number(this.props.search.title) );
+                fd.append('recipients', JSON.stringify(this.parentSelectedValues) );
 
                 this.loading.isActive = true;
                 this.$store.dispatch('emailSmsNotification/send', {
@@ -288,9 +293,11 @@ export default {
                 }).then((res) => {
                     
                     this.loading.isActive = false;
-                    alertService.successFlip( " Messages have be sent and it will take some time to get the status for each message sent.");
+                    alertService.success("All Messages have be sent.");
                     this.props.search.title = null;  
+                    this.props.search.role_id = null; 
                     this.parentSelectedValues = [];
+                    this.list();
 
                     this.errors = {};                   
                 }).catch((err) => {
