@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('email_sms_id');
-            $table->string('status')->nullable();
+            $table->text('status')->nullable();
             $table->timestamps();
         });
     }
