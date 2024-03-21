@@ -47,13 +47,22 @@ trait DefaultAccessModelTrait
         return $branchId;
     }
 
-      
+
     protected function pointEngine($branch, $amount_spent, $transaction=null)
-    {  
+    {
         $engine_constant = 2;
         $commision = $branch->plenti_commision/100;
         $customer_earnings = ($branch->customers_earnings/100);
         $point = round(($transaction == 'burn')? ($engine_constant* $amount_spent) : ($commision* $amount_spent * $customer_earnings  * $engine_constant), 0);
         return $point;
     }
+
+    protected function convertAPIStringToArray($string){
+        // Remove square brackets and split the string by comma and space
+        $array = explode(', ', trim($string, '[]'));
+        // Convert array elements to lowercase
+        $array = array_map('strtolower', $array);
+        return $array;
+    }
+
 }

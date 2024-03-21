@@ -17,6 +17,10 @@
         <AdvertisersComponent />
     </div>
 
+    <div class="admin" v-if="authInfo.role_id == 6">
+        <MerchantComponent />
+    </div>
+
     <div class="admin" v-if="authInfo.role_id == 1">
         <!--========OVERVIEW START=============-->
         <OverviewComponent />
@@ -64,6 +68,8 @@ import SalesSummaryComponent from "./SalesSummaryComponent";
 import OrderSummaryComponent from "./OrderSummaryComponent";
 import CustomerStatsComponent from "./CustomerStatsComponent";
 import AdvertisersComponent from "./AdvertisersComponent";
+import MerchantComponent from "././merchant/MerchantComponent";
+
 import ENV from "../../../config/env";
 export default {
     name: "DashboardComponent",
@@ -77,7 +83,8 @@ export default {
         SalesSummaryComponent,
         OrderSummaryComponent,
         CustomerStatsComponent,
-        AdvertisersComponent
+        AdvertisersComponent,
+        MerchantComponent
     },
     data() {
         return {

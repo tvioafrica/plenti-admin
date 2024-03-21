@@ -226,6 +226,7 @@ class CustomerService
                     $transactionRequest->amount             = $request->amount_spent;
                     $transactionRequest->ref                = $request->ref;
                     $transactionRequest->customer_id        = $customer->id;
+                    $transactionRequest->operator           = $customer->operator;
                     $transactionRequest->payment_method     = $request->payment_method;
                     $transactionRequest->creds              = $pointsReceived;
                     $transactionRequest->commission         = $this->PLENTI_COMMISSION;
@@ -249,6 +250,7 @@ class CustomerService
                         $transactionRequest->amount             = $request->amount_spent;
                         $transactionRequest->ref                = $request->ref;
                         $transactionRequest->customer_id        = $customer->id;
+                        $transactionRequest->operator           = $customer->operator;
                         $transactionRequest->payment_method     = $request->payment_method;
                         $transactionRequest->creds              = $pointsReceived;
                         $transactionRequest->commission         = $this->PLENTI_COMMISSION;
@@ -287,7 +289,8 @@ class CustomerService
                     $transactionRequest->commission         = 0;
                     $transactionRequest->transaction_type   = $request->transaction_type;
                     $transactionRequest->branch             = $branch;
-                    $transactionRequest->entry              = $request->entry;
+                    $transactionRequest->operator           = $request->operator;
+                    $transactionRequest->entry              = $this->convertAPIStringToArray($request->entry);
                     $this->transactionService->saveTransactionLog($transactionRequest);
                     break;
                 }
