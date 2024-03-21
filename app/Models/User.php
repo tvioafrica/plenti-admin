@@ -112,6 +112,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Role::class, 'id', 'myrole');
     }
 
+    public function role() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
     public function addresses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Address::class);

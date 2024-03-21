@@ -28,7 +28,7 @@ use App\Mail\verifyMerchantAccountMail;
 
 class SignupController extends Controller
 {
-
+ 
     private OtpManagerService $otpManagerService;
 
     public function __construct(OtpManagerService $otpManagerService)

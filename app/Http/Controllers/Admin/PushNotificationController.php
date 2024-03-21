@@ -53,7 +53,7 @@ class PushNotificationController extends AdminController
     }
 
     public function destroy(PushNotification $pushNotification) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
-    {
+    { 
         try {
             $this->pushNotificationService->destroy($pushNotification);
             return response('', 202);

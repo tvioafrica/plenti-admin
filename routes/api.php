@@ -72,6 +72,7 @@ use App\Http\Controllers\Admin\EmployeeAddressController;
 use App\Http\Controllers\Admin\AdvertisersOrderController;
 use App\Http\Controllers\Admin\DeliveryBoyOrderController;
 use App\Http\Controllers\Admin\PushNotificationController;
+use App\Http\Controllers\Admin\EmailNSmsController;
 use App\Http\Controllers\Admin\NotificationAlertController;
 use App\Http\Controllers\Admin\AdvertisersAddressController;
 use App\Http\Controllers\Admin\DeliveryBoyAddressController;
@@ -551,6 +552,16 @@ Route::prefix('admin')->name('admin.')->middleware(['installed', 'apiKey', 'auth
         Route::get('/show/{pushNotification}', [PushNotificationController::class, 'show']);
         Route::delete('/{pushNotification}', [PushNotificationController::class, 'destroy']);
         Route::get('/export', [PushNotificationController::class, 'export']);
+    });
+
+    Route::prefix('email-sms')->name('email-sms.')->group(function () {
+        Route::get('/', [EmailNSmsController::class, 'index']);
+        Route::get('/users', [EmailNSmsController::class, 'index_user']);
+        Route::post('/', [EmailNSmsController::class, 'store']);
+        Route::post('/send-message', [EmailNSmsController::class, 'sendMessage']);
+        Route::get('/show/{emailnsmsNotification}', [EmailNSmsController::class, 'show']);
+        Route::delete('/{emailnsmsNotification}', [EmailNSmsController::class, 'destroy']);
+        Route::get('/export', [EmailNSmsController::class, 'export']);
     });
 
     Route::prefix('administrator')->name('administrator.')->group(function () {
