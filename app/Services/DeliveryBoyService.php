@@ -209,7 +209,7 @@ class DeliveryBoyService
             $orderColumn = $request->get('order_column') ?? 'id';
             $orderType   = $request->get('order_type') ?? 'desc';
 
-            return User::role(EnumRole::DELIVERY_BOY)->orderBy($orderColumn, $orderType)->$method(
+            return User::with('media', 'addresses')->role(EnumRole::DELIVERY_BOY)->orderBy($orderColumn, $orderType)->$method(
                 $methodValue
             );
         } catch (Exception $exception) {
