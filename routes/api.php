@@ -120,9 +120,10 @@ Route::match(['get', 'post'], '/refresh-token', [RefreshTokenController::class, 
 Route::prefix('auth')->middleware(['installed', 'apiKey', 'localization'])->name('auth.')->namespace('Auth')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/login-mobile', [LoginController::class, 'loginMobile']);
+    Route::post('/login-with-pin', [LoginController::class, 'loginWithPin']);
+
     Route::post('/mobile-search', [LoginController::class, 'findUserByMobile']);
-
-
+    Route::post('/create-pin', [LoginController::class, 'createPin']);
 
     Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
         Route::post('/', [ForgotPasswordController::class, 'forgotPassword']);
