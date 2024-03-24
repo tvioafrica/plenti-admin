@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Smartisan\Settings\Facades\Settings;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -57,6 +58,12 @@ class LoginController extends Controller
         if (!Auth::guard('web')->attempt($request->only('email', 'password', 'status'))) {
             return new JsonResponse([
                 'errors' => ['validation' => trans('all.message.credentials_invalid')]
+            ], 400);
+        } 
+
+        if (Auth::user()->email_verified_at == '2000-01-01 00:00:00'){
+            return new JsonResponse([
+                'errors' => ['validation' => trans('all.message.not_verified')]
             ], 400);
         }
 
