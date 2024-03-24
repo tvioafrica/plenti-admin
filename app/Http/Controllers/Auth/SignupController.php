@@ -44,7 +44,7 @@ class SignupController extends Controller
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
-    }
+    } 
 
     public function verify(VerifyPhoneRequest $request
     ) : \Illuminate\Http\Response | array | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
@@ -117,7 +117,7 @@ class SignupController extends Controller
                     'phone'             => $request->post('phone'),
                     'country_code'      => $request->post('country'),
                     'branch_id'         => 0,
-                    'email_verified_at' => null,
+                    'email_verified_at' => "2000-01-01 00:00:00",
                     'is_guest'          => Ask::NO,
                     'password'          => Hash::make($request->post('password'))
                 ]);
@@ -168,7 +168,7 @@ class SignupController extends Controller
                     'email'             => $request->post('email'),
                     'phone'             => $request->post('phone'),
                     'country_code'      => $request->post('country'),
-                    'email_verified_at' => null,
+                    'email_verified_at' => "2000-01-01 00:00:00",
                     'branch_id'         => 0,
                     'is_guest'          => Ask::NO,
                     'password'          => Hash::make($request->post('password'))
