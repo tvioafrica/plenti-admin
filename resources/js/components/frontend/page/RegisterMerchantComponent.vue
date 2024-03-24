@@ -100,7 +100,6 @@
 
 <script>
 
-
 import LoadingComponent from "../components/LoadingComponent";
 import alertService from "../../../services/alertService";
 
@@ -131,7 +130,7 @@ export default {
     computed: {
     },
     mounted() {
-       this.verify();
+      this.verify();
     },
     methods: {
         save: function () {

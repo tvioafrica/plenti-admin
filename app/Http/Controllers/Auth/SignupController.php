@@ -28,7 +28,7 @@ use App\Mail\verifyMerchantAccountMail;
 
 class SignupController extends Controller
 {
- 
+
     private OtpManagerService $otpManagerService;
 
     public function __construct(OtpManagerService $otpManagerService)
@@ -128,10 +128,9 @@ class SignupController extends Controller
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$securedToken //send 4 digit pin
+                    'token' => env('MERCHANT_REGISTRATION_URL').$securedToken //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
-            
                 return response(['status' => true, 'message' => trans('all.message.register_successfully_mer')], 201);
             } catch (Exception $exception) {
                 return response(['status' => false, 'message' => $exception->getMessage()], 422);
@@ -140,25 +139,19 @@ class SignupController extends Controller
 
     public function verifyMerchant(VerifyMerchantRequest $request
     ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
-        
+
         try{
             $user = User::where('verify_code', $request->post('code') )->first();
             if (!$user){
                 return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
             }
 
-           /* if (!(Hash::check($request->post('code'), $user->verify_code))) {
-                return response(['status' => false, 'message' => 'Invalid Verification code' ], 400);
-            }*/
-
             User::where( 'verify_code', $request->post('code') )->update([
                 'email_verified_at' => Carbon::now(),
                 'verified' => true,
                 'verify_code' => null
             ]);
-                
             return response(['status' => true, 'message' => trans('all.message.register_successfully_ver')], 201);
-        
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
@@ -187,10 +180,10 @@ class SignupController extends Controller
                 $user->save();
                 $details = [
                     'title' => 'Verify Email Address',
-                    'token' => env('APP_URL')."/#/page/become-a-merchant?token=".$securedToken //send 4 digit pin
+                    'token' => env('MERCHANT_REGISTRATION_URL').$securedToken //send 4 digit pin
                 ];
                 Mail::to($user->email)->send(new verifyMerchantAccountMail($details));
-            
+
                 return response(['status' => true, 'message' => trans('all.message.register_successfully_mer')], 201);
             } catch (Exception $exception) {
                 return response(['status' => false, 'message' => $exception->getMessage()], 422);
@@ -199,7 +192,7 @@ class SignupController extends Controller
 
     public function verifyAdvertiser(VerifyAdvertiserRequest $request
     ) : \Illuminate\Http\Response | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
-        
+
         try{
             $user = User::where('verify_code', $request->post('code') )->first();
             if (!$user){
@@ -211,9 +204,7 @@ class SignupController extends Controller
                 'verified' => true,
                 'verify_code' => null
             ]);
-                
             return response(['status' => true, 'message' => trans('all.message.register_successfully_ver')], 201);
-        
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 
 use App\Models\DefaultAccess;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Smartisan\Settings\Facades\Settings;
@@ -63,6 +64,18 @@ trait DefaultAccessModelTrait
         // Convert array elements to lowercase
         $array = array_map('strtolower', $array);
         return $array;
+    }
+
+    protected function shortMessage($message, $code){
+        return new JsonResponse([
+            'message' => $message
+        ],  $code);
+    }
+
+    protected function validationMessage($message){
+        return new JsonResponse([
+            'message' => $message
+        ], 422);
     }
 
 }
