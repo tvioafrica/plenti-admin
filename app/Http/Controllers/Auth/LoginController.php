@@ -18,12 +18,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Services\DefaultAccessService;
 use App\Traits\DefaultAccessModelTrait;
 use Smartisan\Settings\Facades\Settings;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Log;
-=======
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PermissionResource;
->>>>>>> origin/main
 
 class LoginController extends Controller
 {
