@@ -2,12 +2,14 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\RoleResource;
 use App\Libraries\AppLibrary;
+use App\Http\Resources\RoleResource;
+use App\Traits\DefaultAccessModelTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
+    use DefaultAccessModelTrait;
     /**
      * Transform the resource into an array.
      *
@@ -26,6 +28,7 @@ class UserResource extends JsonResource
             "gender"            => $this->gender,
             'username'         => $this->username,
             "balance"          => ($this->balance == 0) ? $this->customer_balance : $this->balance,
+            "naira_balance"    => $this->covertToNaira($this->customer_balance),
             "currency_balance" => AppLibrary::currencyAmountFormat(($this->balance == 0) ? $this->customer_balance : $this->balance),
             "image"            => $this->image,
             "role_id"          => $this->myRole,

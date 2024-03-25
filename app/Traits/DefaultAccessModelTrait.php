@@ -58,6 +58,13 @@ trait DefaultAccessModelTrait
         return $point;
     }
 
+    protected function covertToNaira($pointRecieved)
+    {
+        $customer_earnings = round($pointRecieved/2);
+        return $customer_earnings;
+    }
+
+
     protected function convertAPIStringToArray($string){
         // Remove square brackets and split the string by comma and space
         $array = explode(', ', trim($string, '[]'));
