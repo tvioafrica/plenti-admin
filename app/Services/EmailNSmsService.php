@@ -130,23 +130,25 @@ class EmailNSmsService
 
             if ( $email_sms["type_of"] == EmailType::EMAIL ){
                 foreach ($chunkedArrays as $chunk) {
-                    for ($i = 0; $i < count($chunk); $i++){
-                        $user = User::where('id', $chunk[$i]->id)->first();
-                        $response = $this->sendEmailNSmsNotification( 
-                        array( 
+                    $emails = array();
+                    foreach ($chunk as $c){
+                        $user = User::where('id', $c->id)->first();
+                        $emails[] = $user->email;
+                    }
+
+                    $response = $this->sendEmailNSmsNotification( 
+                    array( 
                             "type_of" => EmailType::EMAIL, 
                             "title"   => $email_sms->title, 
                             "content" => $email_sms->content, 
-                            "email"   => $user->email 
-                        ));
-                        $emailSmsUser = new EmailNSmsUser();
-                        $emailSmsUser->email_sms_id = $email_sms->id;
-                        $emailSmsUser->user_id      = $user->id;
-                        $emailSmsUser->status       = $response;
-                        $emailSmsUser->save();
-                        sleep(2);
-                    }                   
-                    sleep(10);
+                            "email"   => $emails 
+                    ));
+                    $emailSmsUser               = new EmailNSmsUser();
+                    $emailSmsUser->email_sms_id = $email_sms->id;
+                    $emailSmsUser->user_id      = $user->id;
+                    $emailSmsUser->status       = $response;
+                    $emailSmsUser->save();               
+                    sleep(5);
                 }
             }
             else if ($email_sms["type_of"] == EmailType::SMS){
@@ -246,10 +248,17 @@ class EmailNSmsService
             try {
                 $details = [
                     'title' => $data["title"],
-                    'content' => $data["content"] 
-                ];
-                
-                return json_encode( Mail::to($data["email"])->send(new messageTemplateMail($details)) );
+                    'content' => $data["content"], 
+                    'subject' => $data["title"],
+                ];   
+
+                $emails = $data["email"];               
+                Mail::send(new messageTemplateMail($details), [], function($message) use ($emails)
+                {    
+                    $message->to($emails);    
+                });
+                return json_encode( Mail::failures() );
+
             } catch (Exception $e) {
                 return $e;
             }

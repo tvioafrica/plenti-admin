@@ -39,7 +39,7 @@
                             <div>{{ emailSmsNotification.email_sms.title }}</div>
                         </td>
                         <td class="db-table-body-td">
-                            <div>{{ emailSmsNotification.user.name }}</div>
+                            <div>{{ emailSmsNotification.user !== null ? emailSmsNotification.user.name : "Nil" }}</div>
                         </td>
                         
                         <td class="db-table-body-td">

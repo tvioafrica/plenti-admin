@@ -30,6 +30,7 @@ class messageTemplateMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.messageTemplate')->with('details', $this->details);
+        $subject = $this->details['subject'] != null ? $this->details['subject'] : "Important Update";
+        return $this->subject( $subject )->markdown('emails.messageTemplate')->with('details', $this->details);
     }
 }
