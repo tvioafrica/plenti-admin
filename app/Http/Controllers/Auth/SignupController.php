@@ -14,21 +14,22 @@ use Illuminate\Support\Facades\DB;
 use App\Services\OtpManagerService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
-use App\Http\Requests\VerifyMerchantRequest;
-use App\Http\Requests\SignUpMerchantRequest;
-use App\Http\Requests\SignUpAdvertiserRequest;
-use App\Http\Requests\VerifyAdvertiserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\verifyMerchantAccountMail;
+use App\Traits\DefaultAccessModelTrait;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\SignupPhoneRequest;
 use App\Http\Requests\VerifyPhoneRequest;
 use App\Http\Requests\OfflineSignupRequest;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\verifyMerchantAccountMail;
+use App\Http\Requests\SignUpMerchantRequest;
+use App\Http\Requests\VerifyMerchantRequest;
+use App\Http\Requests\SignUpAdvertiserRequest;
+use App\Http\Requests\VerifyAdvertiserRequest;
 
 class SignupController extends Controller
 {
-
+    use DefaultAccessModelTrait;
     private OtpManagerService $otpManagerService;
 
     public function __construct(OtpManagerService $otpManagerService)
@@ -44,7 +45,7 @@ class SignupController extends Controller
         } catch (Exception $exception) {
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
-    } 
+    }
 
     public function verify(VerifyPhoneRequest $request
     ) : \Illuminate\Http\Response | array | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
@@ -249,6 +250,7 @@ class SignupController extends Controller
                 ]);
                 $user->assignRole(EnumRole::CUSTOMER);
             }
+            $user->naira_balance =  $this->covertToNaira($user->customer_balance);
             return response(['status' => true,
             'message' => trans('all.message.register_successfully'),
             'data' => $user
