@@ -140,27 +140,37 @@ class CustomerController extends AdminController
     ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         try {
             $pointsReceived  = $this->pointEngine($branch, $request->amount_spent, $request->transaction_type);
-            return response([
-                'status' => true,
-                'message' =>"Transaction successful you just " .$request->transaction_type . " ". $pointsReceived. " Points" ,
-                'data' => new UserResource($this->customerService->earnBurnPoints($request, $branch,$pointsReceived ))
-            ], 201);
+            $userData = $this->customerService->earnBurnPoints($request, $branch,$pointsReceived);
+            if(!is_null($userData->id)){
+                return response([
+                    'status' => true,
+                    'message' =>"Transaction successful you just " .$request->transaction_type . " ". $pointsReceived. " Points" ,
+                    'data' => new UserResource($userData)
+                ], 201);
+           }else{
+                return response(['status' => false, 'message' => "User does not exit"], 422);
+           }
+
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }
     }
-
 
     public function earnPromoReward(
         EarnPointsRequest $request,
         User $branch
     ) : \Illuminate\Http\Response | EarnBurnPointResource  | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory {
         try {
-            return response([
-            'status' => true,
-            'message' =>"Promo Claimed successfully",
-            'data' => new UserResource($this->customerService->earnPromoReward($request, $branch))
-        ], 201);
+            $userData = $this->customerService->earnPromoReward($request, $branch);
+            if(!is_null( $userData->id)){
+                return response([
+                    'status' => true,
+                    'message' =>"Promo Claimed successfully",
+                    'data' => new UserResource($userData)
+                ], 201);
+            }else{
+                return response(['status' => false, 'message' => "User does not exit"], 422);
+            }
         } catch (Exception $exception) {
             return response(['status' => false, 'message' =>$exception->getMessage()], 422);
         }

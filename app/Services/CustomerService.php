@@ -25,7 +25,7 @@ class CustomerService
     private TransactionService $transactionService;
     private $PLENTI_COMMISSION =  2;
 
-    public object $user;
+    public User $user;
     public array $phoneFilter = ['phone'];
     public array $roleFilter = ['role_id'];
     public array $userFilter = ['name', 'email', 'username', 'branch_id', 'status', 'phone', 'customer_balance'];
@@ -208,97 +208,105 @@ class CustomerService
 
     public function earnBurnPoints($request, User $branch, int $pointsReceived ): User
     {
-        $customer = User::where(['id' =>  $request->customer_id])->first();
-        $this->user = $customer;
-        $this->transactionService =  new TransactionService();
+        $customer = User::find($request->customer_id);
 
-        DB::transaction(function () use ($customer, $request, $branch, $pointsReceived) {
-            switch($request->transaction_type){
-                case "earn" : {
-                    $this->user->earn_point         = $customer->earn_point + $pointsReceived;
-                    $this->user->total_transactions = $customer->total_transactions + 1;
-                    $this->user->earn_amount        = $customer->earn_amount + $request->amount_spent;
-                    $this->user->customer_balance   = $customer->customer_balance + $pointsReceived;
-                    $this->user->total_amount_spent = $customer->total_amount_spent + $request->amount_spent;
-
-                    $transactionRequest =  new TransactionRequest;
-                    $transactionRequest->amount_spent       = $request->amount_spent;
-                    $transactionRequest->amount             = $request->amount_spent;
-                    $transactionRequest->ref                = $request->ref;
-                    $transactionRequest->customer_id        = $customer->id;
-                    $transactionRequest->operator           = $customer->operator;
-                    $transactionRequest->payment_method     = $request->payment_method;
-                    $transactionRequest->creds              = $pointsReceived;
-                    $transactionRequest->commission         = $this->PLENTI_COMMISSION;
-                    $transactionRequest->transaction_type   = $request->transaction_type;
-                    $transactionRequest->branch             = $branch;
-                    $this->transactionService->saveTransactionLog($transactionRequest);
-                    break;
-                }
-                case "burn" : {
-                    if($this->user->customer_balance > $pointsReceived){
-                        $this->user->earn_point         =  $this->user->earn_point - $pointsReceived;
-                        $this->user->burn_point         =  $this->user->burn_point + $pointsReceived;
-                        $this->user->total_transactions =  $this->user->total_transactions + 1;
-                        $this->user->earn_amount        =  $this->user->earn_amount - $request->amount_spent;
-                        $this->user->burn_amount        = $this->user->burn_amount + $request->burn_amount;
-                        $this->user->customer_balance   = $this->user->customer_balance - $pointsReceived;
-                        $this->user->total_amount_spent = $this->user->total_amount_spent + $request->amount_spent;
+        if(!is_null($customer)){
+            $this->user = $customer;
+            $this->transactionService =  new TransactionService();
+            DB::transaction(function () use ($customer, $request, $branch, $pointsReceived) {
+                switch($request->transaction_type){
+                    case "earn" : {
+                        $this->user->earn_point         = $customer->earn_point + $pointsReceived;
+                        $this->user->total_transactions = $customer->total_transactions + 1;
+                        $this->user->earn_amount        = $customer->earn_amount + $request->amount_spent;
+                        $this->user->customer_balance   = $customer->customer_balance + $pointsReceived;
+                        $this->user->total_amount_spent = $customer->total_amount_spent + $request->amount_spent;
 
                         $transactionRequest =  new TransactionRequest;
                         $transactionRequest->amount_spent       = $request->amount_spent;
                         $transactionRequest->amount             = $request->amount_spent;
                         $transactionRequest->ref                = $request->ref;
                         $transactionRequest->customer_id        = $customer->id;
-                        $transactionRequest->operator           = $customer->operator;
+                        $transactionRequest->operator           = $request->operator;
                         $transactionRequest->payment_method     = $request->payment_method;
                         $transactionRequest->creds              = $pointsReceived;
                         $transactionRequest->commission         = $this->PLENTI_COMMISSION;
                         $transactionRequest->transaction_type   = $request->transaction_type;
                         $transactionRequest->branch             = $branch;
                         $this->transactionService->saveTransactionLog($transactionRequest);
-                    }else{
-                        throw new Exception(trans('all.message.insufficient_balance'), 422);
+                        break;
                     }
-                    break;
-                }
-            }
-            $this->user->save();
-        });
+                    case "burn" : {
+                        if($this->user->customer_balance > $pointsReceived){
+                            $this->user->earn_point         =  $this->user->earn_point - $pointsReceived;
+                            $this->user->burn_point         =  $this->user->burn_point + $pointsReceived;
+                            $this->user->total_transactions =  $this->user->total_transactions + 1;
+                            $this->user->earn_amount        =  $this->user->earn_amount - $request->amount_spent;
+                            $this->user->burn_amount        = $this->user->burn_amount + $request->burn_amount;
+                            $this->user->customer_balance   = $this->user->customer_balance - $pointsReceived;
+                            $this->user->total_amount_spent = $this->user->total_amount_spent + $request->amount_spent;
 
-        return $this->user;
+                            $transactionRequest =  new TransactionRequest;
+                            $transactionRequest->amount_spent       = $request->amount_spent;
+                            $transactionRequest->amount             = $request->amount_spent;
+                            $transactionRequest->ref                = $request->ref;
+                            $transactionRequest->customer_id        = $customer->id;
+                            $transactionRequest->operator           = $request->operator;
+                            $transactionRequest->payment_method     = $request->payment_method;
+                            $transactionRequest->creds              = $pointsReceived;
+                            $transactionRequest->commission         = $this->PLENTI_COMMISSION;
+                            $transactionRequest->transaction_type   = $request->transaction_type;
+                            $transactionRequest->branch             = $branch;
+                            $this->transactionService->saveTransactionLog($transactionRequest);
+                        }else{
+                            throw new Exception(trans('all.message.insufficient_balance'), 422);
+                        }
+                        break;
+                    }
+                }
+                $this->user->save();
+            });
+            return $this->user;
+        }else{
+            return new User;
+        }
+
+
     }
 
     public function earnPromoReward($request, User $branch): User
     {
 
-        $customer = User::where(['id' =>  $request->customer_id])->first();
-        $this->user = $customer;
-        $this->transactionService =  new TransactionService();
+        $customer = User::find($request->customer_id);
+        if(!is_null($customer)){
+            $this->user = $customer;
+            $this->transactionService =  new TransactionService();
 
-        DB::transaction(function () use ($customer, $request, $branch) {
-            switch($request->transaction_type){
-                case "promo" : {
-                    $this->user->total_transactions = $customer->total_transactions + 1;
-                    $transactionRequest =  new TransactionRequest;
-                    $transactionRequest->amount_spent       = 0;
-                    $transactionRequest->ref                = $request->ref;
-                    $transactionRequest->customer_id        = $customer->id;
-                    $transactionRequest->payment_method     = $request->payment_method;
-                    $transactionRequest->creds              = 0;
-                    $transactionRequest->commission         = 0;
-                    $transactionRequest->transaction_type   = $request->transaction_type;
-                    $transactionRequest->branch             = $branch;
-                    $transactionRequest->operator           = $request->operator;
-                    $transactionRequest->entry              = $this->convertAPIStringToArray($request->entry);
-                    $this->transactionService->saveTransactionLog($transactionRequest);
-                    break;
+            DB::transaction(function () use ($customer, $request, $branch) {
+                switch($request->transaction_type){
+                    case "promo" : {
+                        $this->user->total_transactions = $customer->total_transactions + 1;
+                        $transactionRequest =  new TransactionRequest;
+                        $transactionRequest->amount_spent       = 0;
+                        $transactionRequest->ref                = $request->ref;
+                        $transactionRequest->customer_id        = $customer->id;
+                        $transactionRequest->payment_method     = $request->payment_method;
+                        $transactionRequest->creds              = 0;
+                        $transactionRequest->commission         = 0;
+                        $transactionRequest->transaction_type   = $request->transaction_type;
+                        $transactionRequest->branch             = $branch;
+                        $transactionRequest->operator           = $request->operator;
+                        $transactionRequest->entry              = $this->convertAPIStringToArray($request->entry);
+                        $this->transactionService->saveTransactionLog($transactionRequest);
+                        break;
+                    }
                 }
-            }
-            $this->user->save();
-        });
-
-        return $this->user;
+                $this->user->save();
+            });
+            return $this->user;
+        }else{
+            return new User;
+        }
     }
 
 }
