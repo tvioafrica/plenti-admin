@@ -144,7 +144,7 @@ class CustomerController extends AdminController
             if(!is_null($userData->id)){
                 return response([
                     'status' => true,
-                    'message' =>"Transaction successful you just " .$request->transaction_type . " ". $pointsReceived. " Points" ,
+                    'message' =>"Your transaction was successful you just " .$request->transaction_type . " ". $pointsReceived. " points" ,
                     'data' => new UserResource($userData)
                 ], 201);
            }else{
