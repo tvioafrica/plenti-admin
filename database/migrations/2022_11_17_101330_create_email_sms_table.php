@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('email_sms', function (Blueprint $table) {
             $table->id();
-            $table->text('recipients');
+            $table->text('recipients')->nullable();
             $table->integer('type_of');
             $table->integer('branch_id')->nullable();
             $table->string('title');
