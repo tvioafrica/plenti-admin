@@ -47,6 +47,7 @@ return [
         'validation_error'            => 'Validation Error.',
         'credentials_error'           => 'Credentials errors.',
         'credentials_invalid'         => 'Invalid credentials or you are blocked',
+        'not_verified'                => 'This user has not been verified yet!',
         'role_error'                  => 'Role errors.',
         'role_exist'                  => 'Role does not exist.',
         'login_success'               => 'Login Successfully.',
