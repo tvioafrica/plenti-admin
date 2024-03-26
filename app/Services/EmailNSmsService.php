@@ -16,7 +16,7 @@ use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\EmailNSmsRequest;
 use App\Http\Requests\EmailNSmsTempRequest;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\messageTemplateMail;
+use App\Jobs\SendMailJob;
 
 class EmailNSmsService
 {
@@ -252,12 +252,11 @@ class EmailNSmsService
                     'subject' => $data["title"],
                 ];   
 
-                $emails = $data["email"];               
-                Mail::send(new messageTemplateMail($details), [], function($message) use ($emails)
-                {    
-                    $message->to($emails);    
-                });
-                return json_encode( Mail::failures() );
+                $emails = $data["email"];  
+                $primary_email = env('PRIMARY_EMAIL');
+                
+                SendMailJob::dispatch( $details, $primary_email, $emails );
+                return json_encode( array() );
 
             } catch (Exception $e) {
                 return $e;
