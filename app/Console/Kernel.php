@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('queue:work --verbose --once')
+             ->everyTwoMinutes()
+             ->before(function () {
+                 Log::info('Starting queue worker...');
+             })
+             ->after(function () {
+                 Log::info('Queue worker finished.');
+             })
+             ->appendOutputTo(storage_path('logs/queue-worker.log'));
     }
 
     /**
